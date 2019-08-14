@@ -1,0 +1,10 @@
+{
+  "name": "contract-bridge",
+  "version": "1.0.0",
+  "description": "Things for contract bridge",
+  "main": "index.js",
+  "repository": "https://github.com/jfklorenz/Bridge-Package.git",
+  "author": "Julian Lorenz, Hannes Leutloff <leutloff@marvelous.systems>, Noah Hummel <hummel@marvelous.systems>",
+  "license": "MIT",
+  "private": false
+}
