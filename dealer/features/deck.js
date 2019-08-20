@@ -40,15 +40,6 @@ class Deck {
 
 // ================================================================
 
-let deck = new Deck();
-deck.shuffle();
-let hand = new Hand();
-deck.deal(13, hand);
-
-console.log(deck.length);
-console.log(hand.all);
-console.log("");
-console.log(deck.draw(4));
 
 // ================================================================
 module.exports = Deck

@@ -1,5 +1,6 @@
 const Card = require("../features/card.js");
 
+
 // ================================================================
 class Hand {
   constructor() {
@@ -105,15 +106,27 @@ class Hand {
     return spades.sort().reverse();;
   }
 
+  get all1() {
+    let all = [[],[],[],[]];
+    for (var i = 0; i < this.cards.length; i++) {
+      all[this.cards[i].suit].push(this.cards[i].id);
+      all[this.cards[i].suit].sort((a,b) => {
+        if(a.id > b.id)
+         return 1
+         else
+         return -1
+      });
+    }
+    return all;
+  }
+
   get all() {
     let all = [[],[],[],[]];
     for (var i = 0; i < this.cards.length; i++) {
-      all[this.cards[i].suit].push(this.cards[i].repr_rank);
+      all[this.cards[i].suit].push(this.cards[i]);
+      all[this.cards[i].suit].sort().reverse();
     }
-    for (var i = 0; i < 4; i++) {
-      all[i].sort().reverse();
-    }
-    return all.reverse();
+    return all;
   }
 
 }
