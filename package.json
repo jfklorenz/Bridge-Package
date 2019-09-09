@@ -6,5 +6,12 @@
   "repository": "https://github.com/jfklorenz/Bridge-Package.git",
   "author": "Julian Lorenz, Hannes Leutloff <leutloff@marvelous.systems>, Noah Hummel <hummel@marvelous.systems>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "jest": "^24.9.0"
+  },
+  "scripts": {
+    "test": "jest"
+  }
 }
