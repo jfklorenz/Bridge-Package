@@ -4,7 +4,18 @@
   "description": "Things for contract bridge",
   "main": "index.js",
   "repository": "https://github.com/jfklorenz/Bridge-Package.git",
-  "author": "Julian Lorenz, Hannes Leutloff <leutloff@marvelous.systems>, Noah Hummel <hummel@marvelous.systems>",
+  "author": "Julian Lorenz",
+  "contributors": [
+    "Hannes Leutloff <leutloff@marvelous.systems>",
+    "Noah Hummel <hummel@marvelous.systems>"
+  ],
+  "keywords": [
+    "contract",
+    "bridge",
+    "contractbridge",
+    "cards",
+    "cardgame"
+  ],
   "license": "MIT",
   "private": false,
   "devDependencies": {
