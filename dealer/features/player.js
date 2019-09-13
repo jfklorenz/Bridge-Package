@@ -3,8 +3,8 @@ const Hand = require("../features/hand.js");
 
 // ================================================================
 
-class Player(name) {
-  constructor() {
+class Player {
+  constructor(name) {
     this.name = name;
     this.hand = null;
   }

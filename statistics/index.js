@@ -1,7 +1,8 @@
 module.exports = {
-    binomial : require("./features/binomial.js"),
-    calc_forumd : require("./features/calc_forumd.js"),
-    calc_hcp_min : require("./features/calc_hcp_min.js"),
-    factorial : require("./features/factorial.js"),
-    shuffle : require("./features/shuffle.js")
+    binomial : require("./features/math.js"),
+    factorial : require("./features/math.js"),
+    percentageRounded : require("./features/math.js"),
+    hcpRange : require("./features/hcp.js"),
+    distribution : require("./features/distribution.js"),
+    missingCards : require("./features/missing.js"),
 }
