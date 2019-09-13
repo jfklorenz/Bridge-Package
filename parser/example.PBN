@@ -1,0 +1,79 @@
+% PBN 1.0
+% EXPORT
+%
+[Event "European Team Championships '99"]
+[Site "Malta, MLT"]
+[Date "1999.06.25"]
+[Board "1"]
+[West "Moller S"]
+[North "Stamatov J"]
+[East "Godtfredsen S"]
+[South "Popov B"]
+[Dealer "N"]
+[Vulnerable "None"]
+[Deal "N:J2.QJT95.A963.96 K8.84.KQ87.AJ832 T3.K63.JT52.KQ75 AQ97654.A72.4.T4"]
+[Declarer "W"]
+[Contract "4S"]
+[Result "11"]
+[HomeTeam "Bulgaria"]
+[Room "Open"]
+[Round "37"]
+[Score "NS -450"]
+[Table "16"]
+[VisitTeam "Denmark"]
+[Auction "N"]
+Pass 1NT Pass 2H
+X Pass Pass 4S
+Pass Pass Pass
+[Play "N"]
+HQ H4 H6 HA
+D3 DQ D2 D4
+H9 H8 H3 H2
+SJ SK S3 S4
+D6 D7 D5 S5
+H5 S8 HK H7
+D9 D8 DT S6
+S2 C2 ST SA
+HT C3 C5 SQ
+C6 C8 C7 S9
+HJ - - S7
+*
+
+[Event "#"]
+[Site "#"]
+[Date "#"]
+[Board "1"]
+[West "Mihov V"]
+[North "ChristiansenS"]
+[East "Nanev I"]
+[South "Andersen M"]
+[Dealer "N"]
+[Vulnerable "None"]
+[Deal "N:J2.QJT95.A963.96 K8.84.KQ87.AJ832 T3.K63.JT52.KQ75 AQ97654.A72.4.T4"]
+[Declarer "W"]
+[Contract "4S"]
+[Result "11"]
+[HomeTeam "#"]
+[Room "Closed"]
+[Round "#"]
+[Score "NS -450"]
+[Section "#"]
+[Table "#"]
+[VisitTeam "#"]
+[Auction "N"]
+Pass 1D Pass 4S
+Pass Pass Pass
+[Play "N"]
+HQ H4 H6 HA
+D3 DK D2 D4
+HJ H8 HK H7
+S2 SK ST S4
+D6 D7 D5 S6
+H5 S8 H3 H2
+D9 D8 DT S5
+SJ C2 S3 SA
+H9 C3 C5 SQ
+HT C8 DJ S9
+C6 DQ CK S7
+C9 CA C7 C4
+*
