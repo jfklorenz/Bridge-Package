@@ -1,73 +1,54 @@
+const { shuffle } = require("../features/shuffle.js")
+const Card = require("../features/card.js");
+const Hand = require("../features/hand.js");
 
 // ================================================================
-class Card {
-  constructor(id) {
-    if(typeof(id) === 'number' && id >= 0 && id <= 51 && id % 1 === 0) {
-      // This is good
-      this.id = id;
-    } else {
-      // This is bad
-      // This return is ignored and an empty object is returned
-      throw "400/constructor: id needs to be a integer between 0 and 12";
+class Deck {
+  constructor() {
+    this.cards = []
+    this.init();
+  }
+
+  init () {
+    for (var i = 0; i < 52; i++) {
+      this.cards.push(new Card(i));
     }
   }
 
-  get rank() {
-    return this.id % 13;
+  shuffle() {
+    this.cards = shuffle(this.cards);
   }
 
-  get suit() {
-    return Math.floor(this.id / 13);
+  draw(cardCnt) {
+    let draw = [];
+    for (var i = 0; i < cardCnt; i++) {
+      draw.push(this.cards.pop());
+    }
+    return draw;
   }
 
-  get repr_rank() {
-    const dict = {0 : "2", 1: "3", 2: "4", 3: "5", 4: "6", 5: "7", 6: "8", 7: "9", 8: "T", 9: "B", 10: "Q", 11: "K", 12: "A"};
-    return dict[this.rank];
-  }
-
-  get repr_suit() {
-    const dict = {0: "Clubs", 1: "Diamonds", 2: "Hearts", 3: "Spades"};
-    return dict[this.suit];
-  }
-
-  get repr_card() {
-    return this.repr_rank + " of " + this.repr_suit;
-  }
-
-  get hcp() {
-    if (this.rank === 12) {
-      return 4;
-    } else if (this.rank == 11) {
-      return 3;
-    } else if (this.rank == 10) {
-      return 2;
-    } else if (this.rank == 9) {
-      return 1;
-    } else if (this.rank <= 8 && this.rank >= 0) {
-      return 0;
-    } else {
-      throw "404/hcp: rank not valid or found / " + this.rank;
+  deal(cardCnt, hand) {
+    for (var i = 0; i < cardCnt; i++) {
+      hand.cards.push(this.cards.pop());
     }
   }
 
-  get controls() {
-    if (this.rank === 12) {
-      return 2;
-    } else if (this.rank === 11) {
-      return 1;
-    } else if (this.rank <= 10 && this.rank >= 0) {
-      return 0;
-    } else {
-      throw "404/controls: rank not valid or found";
-    }
-  }
-
-
-  inspect(depth, opts) {
-    return this.repr_card;
+  get length() {
+    return this.cards.length;
   }
 }
 
+// ================================================================
+
+let deck = new Deck();
+deck.shuffle();
+let hand = new Hand();
+deck.deal(13, hand);
+
+console.log(deck.length);
+console.log(hand.all);
+console.log("");
+console.log(deck.draw(4));
 
 // ================================================================
-module.exports = Card
+module.exports = Deck
