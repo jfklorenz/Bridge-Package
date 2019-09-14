@@ -78,5 +78,6 @@ for (var i = 0; i < test.length; i++) {
 // ================================================================
 module.exports = {
   allDistributionsWithProbabilityByMissingCards,
-  allDistributionsWithProbabilityByMissingCardsAndHighcards
+  allDistributionsWithProbabilityByMissingCardsAndHighcards,
+  probabilityOfMissingCardsByDistribution
 }

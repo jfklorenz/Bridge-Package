@@ -4,5 +4,6 @@ module.exports = {
     percentageRounded : require("./features/math.js"),
     hcpRange : require("./features/hcp.js"),
     distribution : require("./features/distribution.js"),
-    missingCards : require("./features/missing.js"),
+    allDistributionsWithProbabilityByMissingCards : require("./features/missing.js"),
+    probabilityOfMissingCardsByDistribution : require("./features/missing.js"),
 }
