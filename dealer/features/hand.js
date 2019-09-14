@@ -81,13 +81,6 @@ class Hand {
     return all.reverse();
   }
 
-  draw(cards) {
-    for (var i = 0; i < cards.length; i++) {
-      this.cards.push(cards[i]);
-    }
-    return
-  }
-
   get cardCnt() {
     return this.cards.length;
   }
@@ -99,6 +92,15 @@ class Hand {
       return false;
     }
   }
+
+  draw(cards) {
+    for (var i = 0; i < cards.length; i++) {
+      this.cards.push(cards[i]);
+    }
+    return
+  }
+
+
 
 }
 

@@ -1,69 +1,88 @@
 # Dealer
 
-This folder contains all *Javascript* files needed to deal and analyze a bridge hand.
-
-| File | Content | State |
-| ------ | ------ | ------ |
-| Card | *Class* representing a single playing *Card* | :ballot_box_with_check: |
-| Deck | *Class* representing a *Deck* of 52 *Cards* | :ballot_box_with_check: |
-| Hand | *Class* representing a *Hand* of *Cards* | :ballot_box_with_check: |
-| Player | *Class* representing a *player* within a game | |
-| Shuffle | A *helper* function for shuffling a *Deck* of *Cards* | :ballot_box_with_check: |
+This folder contains all *Javascript* files needed to play a virtual game of Bridge.
 
 ---
 
 ## Card
 A *class* representing a single playing *Card*.
 
-| Function | Return | Explaination |
-| ------ | ------ | ------ |
-| get distribution | [spadesCnt, heartsCnt, diamondsCnt, clubsCnt]  | calculates the distribution |
+```javascript
+class Card(id)
+```
 
-| get hcp() | Integer | calculates the high card points of the hand |
-| get controls() | Integer | calculates the control points of the hand |
-| get distPoints() | Integer | calucaltes the distribution points of the hand |
-
+| Attribute | Value |
+| ------ | ------ |
+| id | Integer from [0, 51] |
+| rank |   |
+| suit |   |
+| repr_rank |   |
+| repr_suit |   |
+| repr_card |   |
+| inspect |   |
 
 
 ### Tests
 
 | Type | Test | State |
 | ------ | ------ | ------ |
-| Error | ID invalid | :ballot_box_with_check: |
-| Func | correct rank | :ballot_box_with_check: |
-| Func | correct suit | :ballot_box_with_check: |
-| Func | correct represetation | :ballot_box_with_check: |
-| Func | correct hcp | :ballot_box_with_check: |
-| Func | correct controls | :ballot_box_with_check: |
-| Case | 2 of clubs | :ballot_box_with_check: |
-| Case | 3 of clubs | :ballot_box_with_check: |
+| Error | ID invalid | [ ] |
+| Func | correct rank | [ ] |
+| Func | correct suit | [ ] |
+| Func | correct represetation | [ ] |
+| Func | correct hcp | [ ] |
+| Func | correct controls | [ ] |
+| Case | 2 of clubs | [ ] |
+| Case | 3 of clubs | [ ] |
 
-
----
-
-## Deck
-A *class* representing a *Deck* of playing cards.
-
-### Tests
-
-| Type | Test | State |
-| ------ | ------ | ------ |
 
 ---
 
 ## Hand
-A *class* representing a *Hand* of playing cards.
+A *class* representing a *hand* of playing cards.
+
+```javascript
+class Hand
+```
+
+| Attribute | Value |
+| ------ | ------ |
+| cards | List of *Cards* |
+| distribution | List with the amount of cards of each suit, i.e. [clubsCnt, diamondsCnt, heartsCnt, spadesCnt]  |
+| clubsCnt | Amount of *clubs* cards |
+| diamondsCnt | Amount of *diamond* cards |
+| heartsCnt | Amount of *heart* cards |
+| spadesCnt | Amount of *spade* cards |
+| clubs | *List* of all *club* cards |
+| diamonds | *List* of all *diamond* cards |
+| hearts | *List* of all *heart* cards |
+| spades | *List* of all *spade* cards |
+| all | *List* of *List* of cards of all suits |
+| fullHand | *true* if the hand is full (i.e. 13 cards), *false* otherwise |
+
+| Method | Input | Output |
+| ------ | ------ | ------ |
+| draw | *List* of *Cards* | None / Adds these cards to the hand |
 
 ### Tests
 
 | Type | Test | State |
 | ------ | ------ | ------ |
 
----
 
+---
 
 ## Player
 A *class* representing a *Player* of a card game.
+
+```javascript
+class Player
+```
+| Attribute | Value |
+| ------ | ------ |
+| dbv | id / dbv-number |
+| name | Name of the player |
+| hand | Hand of the player |
 
 ### Tests
 

@@ -6,7 +6,9 @@ const Hand = require("../features/hand.js");
 class Player {
   constructor(name) {
     this.name = name;
-    this.hand = null;
+    this.dbv = 0;
+    this.hand = new Hand;
+
   }
 
 
