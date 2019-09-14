@@ -6,41 +6,6 @@ class Hand {
     this.cards = [];
   }
 
-  get hcp() {
-    let hcp = 0;
-    for (var i = 0; i < this.cards.length; i++) {
-      hcp += this.cards[i].hcp;
-    }
-    return hcp;
-  }
-
-  get controls() {
-    let controls = 0;
-    for (var i = 0; i < this.cards.length; i++) {
-      hcp += this.cards[i].controls;
-    }
-    return controls;
-  }
-
-  get distPoints() {
-    let distPoints = 0;
-    const dist = this.distribution();
-
-    for (var i = 0; i < 4; i++) {
-      if (dist[i] === 0) {
-        distPoints += 5;
-      } else if (dist[i] === 1) {
-        distPoints += 3;
-      } else if (dist[i] === 2) {
-        distPoints += 1;
-      } else if (dist[i] > 2) {
-        distPoints += 0;
-      } else {
-        throw "404/distPoints: distribution invalid / " + dist;
-      }
-    }
-  }
-
   get distribution() {
     let dist = [0,0,0,0];
     for (var i = 0; i < this.cards.length; i++) {
@@ -114,6 +79,25 @@ class Hand {
       all[i].sort().reverse();
     }
     return all.reverse();
+  }
+
+  draw(cards) {
+    for (var i = 0; i < cards.length; i++) {
+      this.cards.push(cards[i]);
+    }
+    return
+  }
+
+  get cardCnt() {
+    return this.cards.length;
+  }
+
+  get fullHand() {
+    if (this.cards.length === 13) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }

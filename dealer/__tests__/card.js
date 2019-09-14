@@ -4,7 +4,7 @@ const Card = require("../features/card.js");
 // ================================================================
 describe('test/card - A single playing card', function() {
 
-  it("0.1. Error - id invalid", function() {
+  it("0.1. Error - ID invalid", function() {
     // ID is not a number
     expect((id) => {new Card(id)}).withArgs("a").to.throwException();
     expect((id) => {new Card(id)}).withArgs("Z").to.throwException();
@@ -69,28 +69,6 @@ describe('test/card - A single playing card', function() {
     expect(new Card(49).repr_card).to.eql("Q of Spades");
   });
 
-  it("1.4. Func - correct hcp", function() {
-    expect(new Card(14).hcp).to.eql(0);
-    expect(new Card(26).hcp).to.eql(0);
-    expect(new Card(42).hcp).to.eql(0);
-    expect(new Card(51).hcp).to.eql(4);
-    expect(new Card(0).hcp).to.eql(0);
-    expect(new Card(36).hcp).to.eql(2);
-    expect(new Card(37).hcp).to.eql(3);
-    expect(new Card(9).hcp).to.eql(1);
-  });
-
-  it("1.5. Func - correct controls", function() {
-    expect(new Card(14).controls).to.eql(0);
-    expect(new Card(26).controls).to.eql(0);
-    expect(new Card(42).controls).to.eql(0);
-    expect(new Card(51).controls).to.eql(2);
-    expect(new Card(0).controls).to.eql(0);
-    expect(new Card(33).controls).to.eql(0);
-    expect(new Card(37).controls).to.eql(1);
-    expect(new Card(11).controls).to.eql(1);
-  });
-
 // ================================================================
   it("2.1. Case - 2 of clubs", function() {
     expect(new Card(0).id).to.eql(0);
@@ -99,8 +77,6 @@ describe('test/card - A single playing card', function() {
     expect(new Card(0).repr_rank).to.eql("2");
     expect(new Card(0).repr_suit).to.eql("Clubs");
     expect(new Card(0).repr_card).to.eql("2 of Clubs");
-    expect(new Card(0).hcp).to.eql(0);
-    expect(new Card(0).controls).to.eql(0);
   });
 
   it("2.2. Case - 3 of clubs", function() {
@@ -110,8 +86,6 @@ describe('test/card - A single playing card', function() {
     expect(new Card(1).repr_rank).to.eql("3");
     expect(new Card(1).repr_suit).to.eql("Clubs");
     expect(new Card(1).repr_card).to.eql("3 of Clubs");
-    expect(new Card(1).hcp).to.eql(0);
-    expect(new Card(1).controls).to.eql(0);
   });
 
 });

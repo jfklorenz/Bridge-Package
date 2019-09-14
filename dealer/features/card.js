@@ -8,7 +8,7 @@ class Card {
     } else {
       // This is bad
       // This return is ignored and an empty object is returned
-      throw "400/constructor: id needs to be a integer between 0 and 12";
+      throw "400/constructor: id needs to be a integer between 0 and 51.";
     }
   }
 
@@ -33,35 +33,6 @@ class Card {
   get repr_card() {
     return this.repr_rank + " of " + this.repr_suit;
   }
-
-  get hcp() {
-    if (this.rank === 12) {
-      return 4;
-    } else if (this.rank == 11) {
-      return 3;
-    } else if (this.rank == 10) {
-      return 2;
-    } else if (this.rank == 9) {
-      return 1;
-    } else if (this.rank <= 8 && this.rank >= 0) {
-      return 0;
-    } else {
-      throw "404/hcp: rank not valid or found / " + this.rank;
-    }
-  }
-
-  get controls() {
-    if (this.rank === 12) {
-      return 2;
-    } else if (this.rank === 11) {
-      return 1;
-    } else if (this.rank <= 10 && this.rank >= 0) {
-      return 0;
-    } else {
-      throw "404/controls: rank not valid or found";
-    }
-  }
-
 
   inspect(depth, opts) {
     return this.repr_card;
