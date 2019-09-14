@@ -15,18 +15,27 @@ describe('test/hcp.js - Highcard Point Probability', function() {
   });
 
   it("1.1. HCP Range / Base Cases", function() {
-    // Missing 1 Card / 50-50
+    // 0 HCP / 2310789600, 0.36
     expect(hcpRange(0)[0]).to.equal(2310789600);
     expect(hcpRange(0)[1]).to.equal(0.36);
+    // 37 HCP / 4, 0.00
     expect(hcpRange(37)[0]).to.equal(4);
     expect(hcpRange(37)[1]).to.equal(0);
   });
 
   it("1.2. HCP Range / Cases", function() {
-    //expect(hcpRange(3)).to.equal(120);
-    //expect(hcpRange(13)).to.equal(126);
-    //expect(hcpRange(28)).to.equal(10);
-    //expect(hcpRange(11,17)).to.equal(12376);
+    // 1 HCP / 5006710800, 0.79
+    expect(hcpRange(1)[0]).to.equal(5006710800);
+    expect(hcpRange(1)[1]).to.equal(0.79);
+    // 2 HCP / 8611542576, 1.36
+    expect(hcpRange(2)[0]).to.equal(8611542576);
+    expect(hcpRange(2)[1]).to.equal(1.36);
+    // 3 HCP / 15636342960, 2.46
+    expect(hcpRange(3)[0]).to.equal(15636342960);
+    expect(hcpRange(3)[1]).to.equal(2.46);
+    // 1-3 HCP / 29254596336, 4.61
+    expect(hcpRange(1,3)[0]).to.equal(29254596336);
+    expect(hcpRange(1,3)[1]).to.equal(4.61);
   });
 
 // ================================================================

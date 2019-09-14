@@ -23,7 +23,6 @@ describe('test/math.js - Mathematical Functions', function() {
     expect(binomial(101,1)).to.equal(101);
     expect(binomial(101,101)).to.equal(1);
     expect(binomial(101,100)).to.equal(101);
-
   });
 
   it("1.2. Binomial / Cases", function() {

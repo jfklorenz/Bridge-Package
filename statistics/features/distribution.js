@@ -5,7 +5,7 @@ const {binomial, factorial, percentageRounded} = require("./math.js");
 // distribution
 function distribution(dist, fix = false) {
 
-  if (typeof(dist) !== 'list') throw "1014: dist must be a list.";
+  //if (typeof(dist) !== 'list') throw "1014: dist must be a list.";
   for (var i = 0; i < 4; i++) {
     if (!([...Array(14).keys()].includes(dist[i]))) throw "1014: Invalid Input";
   }
@@ -15,7 +15,7 @@ function distribution(dist, fix = false) {
   let handCnt = 0;
   handCnt = binomial(13, dist[0]) * binomial(13, dist[1]) * binomial(13, dist[2]) * binomial(13, dist[3]);
 
-  if (fix) {
+  if (!fix) {
     handCnt *= factorial(4);
     for (var y = 0; y <= 13; y++) {
       handCnt = handCnt / factorial(dist.filter(x => x==y).length);
