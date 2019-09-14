@@ -55,17 +55,14 @@ describe('test/card - A single playing card', function() {
     expect(new Card(8).repr_rank).to.eql("T");
     expect(new Card(8).repr_suit).to.eql("Clubs");
     expect(new Card(8).repr_card).to.eql("T of Clubs");
-
     // K of Diamonds
     expect(new Card(14).repr_rank).to.eql("3");
     expect(new Card(14).repr_suit).to.eql("Diamonds");
     expect(new Card(14).repr_card).to.eql("3 of Diamonds");
-
     // 7 of Hearts
     expect(new Card(32).repr_rank).to.eql("8");
     expect(new Card(32).repr_suit).to.eql("Hearts");
     expect(new Card(32).repr_card).to.eql("8 of Hearts");
-
     // 4 of Spades
     expect(new Card(49).repr_rank).to.eql("Q");
     expect(new Card(49).repr_suit).to.eql("Spades");
