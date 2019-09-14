@@ -8,7 +8,7 @@ class Player {
     this.name = name;
     this.dbv = 0;
     this.hand = new Hand;
-
+    
   }
 
 
