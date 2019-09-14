@@ -13,7 +13,7 @@ If a distribution is marked as **fix**, the suits are not interchangable meaning
 If the **fix** attribute is marked as *false*, the length of a suit means *any* suit.
 
 ```javascript
-distribution(ListOfSuitLength, fix = false)
+function distribution(ListOfSuitLength, fix = false)
 ```
 
 | Parameter | Type |
@@ -32,7 +32,7 @@ distribution(ListOfSuitLength, fix = false)
 You can calculate the probability of getting dealt a hand within a certain range of *highcard points* (*hcp*) and the respective number of hands.
 
 ```javascript
-hcpRange(hcpMin, hcpMax = hcpMin)
+function hcpRange(hcpMin, hcpMax = hcpMin)
 ```
 
 | Parameter | Type |
@@ -52,8 +52,8 @@ For a certain amount of missing cards you can calculate the probability for each
 Additionally you can also specify an amount of *highcards* among the missing cards and calculate the respective probabilities.
 
 ```javascript
-missingCards(cardCnt)
-missingHighcards(cardCnt, highcardCnt)
+function missingCards(cardCnt)
+function missingHighcards(cardCnt, highcardCnt)
 ```
 
 | Parameter | Type |
@@ -74,9 +74,9 @@ The math file contains all mathematical functions needed to calculate the functi
 We have the binomial coefficient, the factorial function and the possibility to round a certain value and represent its percentage value, i.e. 0.12345 will be 12.35%.
 
 ```javascript
-binomial(n, k)
-factorial(n)
-percentageRounded(x)
+function binomial(n, k)
+function factorial(n)
+function percentageRounded(x)
 ```
 
 | Parameter | Type |
