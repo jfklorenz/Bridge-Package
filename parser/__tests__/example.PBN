@@ -1,0 +1,78 @@
+% PBN 1.0
+% EXPORT
+%
+[Event "Event 1"]
+[Site "Site 1"]
+[Date "Date 1"]
+[Board "Board 1"]
+[West "West 1"]
+[North "North 1"]
+[East "East 1"]
+[South "West 1"]
+[Dealer "Dealer 1"]
+[Vulnerable "Vulnerable 1"]
+[Deal "Deal 1"]
+[Declarer "Declarer 1"]
+[Contract "Contract 1"]
+[Result "Result 1"]
+[HomeTeam "HomeTeam 1"]
+[Room "Room 1"]
+[Round "Round 1"]
+[Score "Score 1"]
+[Table "Table 1"]
+[VisitTeam "VisitTeam 1"]
+[Auction "Auction 1"]
+Pass 1NT Pass 2H
+X Pass Pass 4S
+Pass Pass Pass
+[Play "N"]
+HQ H4 H6 HA
+D3 DQ D2 D4
+H9 H8 H3 H2
+SJ SK S3 S4
+D6 D7 D5 S5
+H5 S8 HK H7
+D9 D8 DT S6
+S2 C2 ST SA
+HT C3 C5 SQ
+C6 C8 C7 S9
+HJ - - S7
+*
+
+[Event "Event 2"]
+[Site "Site 2"]
+[Date "Date 2"]
+[Board "Board 2"]
+[West "West 2"]
+[North "North 2"]
+[East "East 2"]
+[South "West 2"]
+[Dealer "Dealer 2"]
+[Vulnerable "Vulnerable 2"]
+[Deal "Deal 2"]
+[Declarer "Declarer 2"]
+[Contract "Contract 2"]
+[Result "Result 2"]
+[HomeTeam "HomeTeam 2"]
+[Room "Room 2"]
+[Round "Round 2"]
+[Score "Score 2"]
+[Table "Table 2"]
+[VisitTeam "VisitTeam 2"]
+[Auction "Auction 2"]
+Pass 1NT Pass 2H
+X Pass Pass 4S
+Pass Pass Pass
+[Play "N"]
+HQ H4 H6 HA
+D3 DQ D2 D4
+H9 H8 H3 H2
+SJ SK S3 S4
+D6 D7 D5 S5
+H5 S8 HK H7
+D9 D8 DT S6
+S2 C2 ST SA
+HT C3 C5 SQ
+C6 C8 C7 S9
+HJ - - S7
+*
