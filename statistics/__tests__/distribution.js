@@ -1,61 +1,64 @@
 const expect = require("expect.js");
-const { distribution } = require("../features/distribution.js");
+const { distributions } = require("../features/distribution.js");
 
 // ================================================================
 describe('test/distribution.js - Distribution Probability', function() {
 
   // ================================================================
   // Distribution
-  it("1.0. Distribution / Input", function() {
+  it("1.0. Distributions / Input must be 'boolean'", function() {
     // Exceptions
-    expect(distribution).withArgs("a").to.throwException();
-    expect(distribution).withArgs("Z").to.throwException();
-    expect(distribution).withArgs(-1).to.throwException();
-    expect(distribution).withArgs(1.234).to.throwException();
-    expect(distribution).withArgs(38).to.throwException();
+    expect(distributions).withArgs("a").to.throwException();
+    expect(distributions).withArgs("Z").to.throwException();
+    expect(distributions).withArgs(-1).to.throwException();
+    expect(distributions).withArgs(1.234).to.throwException();
+    expect(distributions).withArgs(38).to.throwException();
+    expect(distributions).withArgs(0).to.throwException();
   });
 
-  it("1.1. Distribution / Base Cases", function() {
-    // [13,0,0,0] / 4, 0.00
-    expect(distribution([13,0,0,0])[0]).to.equal(4);
-    expect(distribution([13,0,0,0])[1]).to.equal(0.00);
-    // [4,3,3,3] / 66905856160, 10.54
-    expect(distribution([4,3,3,3])[0]).to.equal(66905856160);
-    expect(distribution([4,3,3,3])[1]).to.equal(10.54);
-    // Symmetry
-    // [0,13,0,0] / 4, 0.00
-    expect(distribution([0,13,0,0])[0]).to.equal(4);
-    expect(distribution([0,13,0,0])[1]).to.equal(0.00);
-    // [0,0,13,0] / 4, 0.00
-    expect(distribution([0,0,13,0])[0]).to.equal(4);
-    expect(distribution([0,0,13,0])[1]).to.equal(0.00);
-    // [0,0,0,13] / 4, 0.00
-    expect(distribution([0,0,0,13])[0]).to.equal(4);
-    expect(distribution([0,0,0,13])[1]).to.equal(0.00);
-    // [3,4,3,3] / 66905856160, 10.54
-    expect(distribution([3,4,3,3])[0]).to.equal(66905856160);
-    expect(distribution([3,4,3,3])[1]).to.equal(10.54);
-    // [3,3,4,3] / 66905856160, 10.54
-    expect(distribution([3,3,4,3])[0]).to.equal(66905856160);
-    expect(distribution([3,3,4,3])[1]).to.equal(10.54);
-    // [3,3,3,4] / 66905856160, 10.54
-    expect(distribution([3,3,3,4])[0]).to.equal(66905856160);
-    expect(distribution([3,3,3,4])[1]).to.equal(10.54);
+  // ----------------------------------------------------------------
+  it("1.1. Distributions / Variable - Correct cases included", function() {
+    let dists = distributions(false);
+    
+    const distributionsVariable = [
+      [4,3,3,3], [4,4,3,2], [4,4,4,1],
+      [5,3,3,2], [5,4,2,2], [5,4,3,1], [5,4,4,0], [5,5,2,1], [5,5,3,0],
+      [6,3,2,2], [6,3,3,1], [6,4,2,1], [6,4,3,0], [6,5,1,1], [6,5,2,0], [6,6,1,0],
+      [7,2,2,2], [7,3,2,1], [7,3,3,0], [7,4,1,1,], [7,4,2,0], [7,5,1,0], [7,6,0,0],
+      [8,2,2,1], [8,3,1,1], [8,3,2,0], [8,4,1,0], [8,5,0,0],
+      [9,2,1,1], [9,2,2,0], [9,3,1,0], [9,4,0,0], 
+      [10,1,1,1], [10,2,1,0], [10,3,0,0], 
+      [11,1,1,0], [11,2,0,0], [12,1,0,0], [13,0,0,0]
+    ];
+
+    // All cases included
+    expect(dists).to.eql(distributionsVariable);
+    // 39 cases
+    expect(dists.length).to.eql(39);
+
   });
 
-  it("1.2. Distribution / Cases", function() {
-    // [12,1,0,0] / 2.028, 0.00
-    expect(distribution([12,1,0,0])[0]).to.equal(2028);
-    expect(distribution([12,1,0,0])[1]).to.equal(0.00);
-    // [4,4,3,2] / 136.852.887.600, 21.55
-    expect(distribution([4,4,3,2])[0]).to.equal(136852887600);
-    expect(distribution([4,4,3,2])[1]).to.equal(21.55);
-    // [5,4,2,2] / 67.182.326.640, 10.58
-    expect(distribution([5,4,2,2])[0]).to.equal(67182326640);
-    expect(distribution([5,4,2,2])[1]).to.equal(10.58);
-    // [6,3,2,2] / 35.830.574.208, 5.64
-    expect(distribution([6,3,2,2])[0]).to.equal(35830574208);
-    expect(distribution([6,3,2,2])[1]).to.equal(5.64);
+  // ----------------------------------------------------------------
+  it("1.2. Distributions / Fix - Correct cases included", function() {
+    let dists = distributions(true);
+
+    const distributionsFix = [];
+    for (var c = 0; c <= 13; c++) {
+      for (var d = 0; d <= 13 - c; d++) {
+        for (var h = 0; h <= 13 - c - d; h++) {
+          for (var s = 0; s <= 13 - c - d - h; s++) {
+            if (c + d + h + s === 13) {
+              distributionsFix.push([c,d,h,s]);
+            }
+          }
+        }
+      } 
+    }
+
+    // All cases included
+    expect(dists).to.eql(distributionsFix);
+    // 560 cases
+    expect(dists.length).to.eql(560);
   });
 
 // ================================================================

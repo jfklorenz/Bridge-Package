@@ -29,7 +29,7 @@ function factorial(num) {
 // Round & Percentage
 function percentageRounded(value) {
     if ((typeof value !== 'number')) throw "1014: Input must be a number.";
-    return Math.round(10000 * value) / 100;
+    return Math.round(10000 * value) / 10000;
 }
 
 // ================================================================

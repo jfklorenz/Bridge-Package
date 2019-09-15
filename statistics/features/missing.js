@@ -1,83 +1,68 @@
 // Imports
-const {factorial, percentageRounded} = require("./math.js");
+const {binomial, factorial, percentageRounded} = require("./math.js");
 
 // ================================================================
 
 // ================================================================
 // All Distributions with Probability by Missing Cards
-function allDistributionsWithProbabilityByMissingCards(cardCnt) {
-  if (!([...Array(14).keys()].slice(1).includes(cardCnt))) throw "1014: Input invalid.";
+function missingCardsDistribution(cardCnt, cardsLeft = [13, 13]) {
+  if (!([...Array(14).keys()].slice(1).includes(cardCnt))) throw "1014: cardCnt invalid.";
 
   let results = [];
-  for (var i = 0; i <= cardCnt; i++) {
-    results.push([[i, cardCnt - i], 0]);
-  }
-
-  for (var j = 0; j < results.length; j++) {
-    let cardsLeft = 13;
-    let cardsRight = 13;
-    let result = 1;
-    let resultCurrent = results[j][0];
-
-    for (var l = 0; l <= resultCurrent[0]; l++) {
-      if (l > 0) {
-        result *= cardsLeft / (cardsLeft + cardsRight);
-        cardsLeft -= 1;
-      }
-    }
-    
-    for (var r = 0; r <= resultCurrent[1]; r++) {
-      if (r > 0) {
-        result *= cardsRight / (cardsLeft + cardsRight);
-        cardsRight -= 1;
-      }
-    }
-
-    result *= factorial(resultCurrent[0] + resultCurrent[1]) / (factorial(resultCurrent[0]) * factorial(resultCurrent[1]));
-    results[j][1] = percentageRounded(result);
+  for (var r = 0; r <= cardCnt; r++) {
+    results.push([
+      [r, cardCnt - r], 
+      binomial(cardCnt, r) * // binom(a, b)
+      factorial(cardsLeft[0]) * 
+      factorial(cardsLeft[1]) * 
+      factorial(cardsLeft[0] + cardsLeft[1] - cardCnt) / 
+      factorial(cardsLeft[0] + cardsLeft[1]) / 
+      factorial(cardsLeft[0] - r) / 
+      factorial(cardsLeft[1] - cardCnt + r)
+    ]);
   }
   return results;
 }
 
 // ================================================================
 // Probability of Missing Cards by Disribution
-function probabilityOfMissingCardsByDistribution(distribution) {
-  let results = allDistributionsWithProbabilityByMissingCards(distribution[0] + distribution[1]);
-  for (var i = 0; i < results.length; i++) {
-    if (results[i][0][0] === distribution[0] && results[i][0][1] === distribution[1]) {
-      return results[i][1];
-    }
-  }
+function missingCardsProbability(distribution, cardsLeft = [13, 13], fix = true) {
+  return 100 * 
+    binomial(distribution[0] + distribution[1], distribution[0]) * // binom(a, b)
+    factorial(cardsLeft[0]) * 
+    factorial(cardsLeft[1]) * 
+    factorial(cardsLeft[0] + cardsLeft[1] - distribution[0] - distribution[1]) / 
+    factorial(cardsLeft[0] + cardsLeft[1]) / 
+    factorial(cardsLeft[0] - distribution[0]) / 
+    factorial(cardsLeft[1] - distribution[1])
 }
 
 // ================================================================
 // missingHighcards
-function allDistributionsWithProbabilityByMissingCardsAndHighcards(cardCnt, highcardCnt) {
-  let results = [];
+function missingHighcardsDistribution(cardCnt, highcardCnt = 0) {
+  if (!([...Array(14).keys()].slice(1).includes(cardCnt))) throw "1014: cardCnt invalid.";
+  if (!([...Array(14).keys()].includes(highcardCnt))) throw "1014: highcardCnt invalid.";
+  if (cardCnt < highcardCnt) throw "1014: cardCnt must be larger than highcardCnt";
 
-  for (var i = 0; i <= cardCnt; i++) {
-    let result0 = []
-    for (var j = 0; j <= highcardCnt; j++) {
-      if (i >= j && cardCnt -i >= highcardCnt - j) {
-        result0.push([[i, cardCnt - i], [j, highcardCnt - j], 
-            percentageRounded(
-                probabilityOfMissingCardsByDistribution([i, cardCnt - i]) * 
-                probabilityOfMissingCardsByDistribution([j, highcardCnt - j]) / 10000)]);
+  let results = [];
+  // Generate Result Desitributions 
+  for (var c = 0; c <= cardCnt; c++) {
+    for (var h = 0; h <= highcardCnt; h++) {
+      if (c >= h && cardCnt - c >= highcardCnt - h) {
+        results.push([
+          [c, cardCnt - c], 
+          [h, highcardCnt - h],
+          Math.round(missingCardsProbability([h, highcardCnt - h], [c, cardCnt - c]) * 
+          missingCardsProbability([c, cardCnt - c])) / 100
+        ])
       }
     }
-    results.push(result0);
   }
-  return results
-}
-
-let test = allDistributionsWithProbabilityByMissingCardsAndHighcards(4, 2);
-for (var i = 0; i < test.length; i++) {
-  console.log(test[i])
+  return results;
 }
 
 // ================================================================
 module.exports = {
-  allDistributionsWithProbabilityByMissingCards,
-  allDistributionsWithProbabilityByMissingCardsAndHighcards,
-  probabilityOfMissingCardsByDistribution
+  missingCardsDistribution,
+  missingHighcardsDistribution
 }
