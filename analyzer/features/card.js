@@ -28,7 +28,6 @@ function analyzeCardControls(card) {
 }
 
 
-
 console.log(analyzeCardHcp(new Card(11)));
 console.log(analyzeCardHcp(new Card(22)));
 
