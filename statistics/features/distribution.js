@@ -89,18 +89,18 @@ function distributionHandcnt(dist, fix = false) {
 function shortestSuitProbability(cardCnt) {
   if (!([...Array(4).keys()].includes(cardCnt))) throw "1014: Invalid Input";
 
-  switch (true) {
+  switch (cardCnt) {
     // 0 Cards / Void
-    case (cardCnt === 0):
+    case (0):
       return 0.0512;
     // 1 Card / Single
-    case (cardCnt === 1):
+    case (1):
       return 0.3055;
     // 2 Cards / Doubleton
-    case (cardCnt === 2):
+    case (2):
       return 0.5380;
     // 3 Cards / Tripleton
-    case (cardCnt === 3):
+    case (3):
       return 0.1054;
   }
 
@@ -112,9 +112,9 @@ function shortestSuitProbability(cardCnt) {
 function shortestSuitDistributions(cardCnt) {
   if (!([...Array(4).keys()].includes(cardCnt))) throw "1014: Invalid Input";
 
-  switch (true) {
+  switch (cardCnt) {
     // 0 Cards / Void
-    case (cardCnt === 0):
+    case (0):
       return [
         [13,0,0,0],
         [12,1,0,0],
@@ -127,18 +127,18 @@ function shortestSuitDistributions(cardCnt) {
         [5,5,3,0], [5,4,4,0]
       ];
     // 1 Card / Single
-    case (cardCnt === 1):
+    case (1):
       return [
         [4,4,4,1], [5,4,3,1], [5,5,2,1], [6,3,3,1], [6,4,2,1], [6,5,1,1], 
         [7,3,2,1], [7,4,1,1], [8,2,2,1], [8,3,1,1], [9,2,1,1], [10,1,1,1]
       ];
     // 2 Cards / Doubleton
-    case (cardCnt === 2):
+    case (2):
       return [
         [4,4,3,2], [5,3,3,2], [5,4,2,2], [6,3,2,2], [7,2,2,2]
       ];
     // 3 Cards / Tripleton
-    case (cardCnt === 3):
+    case (3):
       return [[4,3,3,3]];
   }
 
@@ -150,36 +150,36 @@ function shortestSuitDistributions(cardCnt) {
 function longestSuitProbability(cardCnt) {
   if (!([...Array(14).keys(4)].includes(cardCnt))) throw "1014: Invalid Input";
 
-  switch (true) {
+  switch (cardCnt) {
     // 4 Cards
-    case (cardCnt === 4):
+    case (4):
       return 0.3508;
     // 5 Cards
-    case (cardCnt === 5):
+    case (5):
       return 0.4434;
     // 6 Cards
-    case (cardCnt === 6):
+    case (6):
       return 0.1655;
     // 7 Cards
-    case (cardCnt === 7):
+    case (7):
       return 0.0353;
     // 8 Cards
-    case (cardCnt === 8):
+    case (8):
       return 0.0047;
     // 9 Cards
-    case (cardCnt === 9):
+    case (9):
       return 0.00037;
     // 10 Cards
-    case (cardCnt === 10):
+    case (10):
       return 0.000017;
     // 11 Cards
-    case (cardCnt === 11):
+    case (11):
       return 0.0000003;
     // 12 Cards
-    case (cardCnt === 12):
+    case (12):
         return 0.000000003;
     // 13 Cards
-    case (cardCnt === 13):
+    case (13):
       return 0.000000000006; 
   }
 

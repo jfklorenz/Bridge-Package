@@ -1,5 +1,5 @@
 const expect = require("expect.js");
-const { distributions } = require("../features/distribution.js");
+const { distributions, distributionProbability, distributionHandcnt } = require("../features/distribution.js");
 
 // ================================================================
 describe('test/distribution.js - Distribution Probability', function() {
@@ -62,4 +62,8 @@ describe('test/distribution.js - Distribution Probability', function() {
   });
 
 // ================================================================
+// Distribution Probability
+
+// ================================================================
+// Distribution HandCnt
 });
