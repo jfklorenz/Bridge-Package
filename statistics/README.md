@@ -6,7 +6,7 @@
 ## Distribution
 | File | Status | Tested |
 | ------ | ------ | ------ |
-| *distribution.js* | final | [ ] |
+| *distribution.js* | final | - [ ] |
 
 You can calculate the *probability* of getting dealt a certain distribution and the respective number of possible hands.
 If a distribution is marked as **fix**, the suits are not interchangable meaning the first suit must mean clubs, the second diamonds and so on.
