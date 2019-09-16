@@ -191,36 +191,36 @@ function longestSuitProbability(cardCnt) {
 function longestSuitDistributions(cardCnt) {
   if (!([...Array(14).keys(4)].includes(cardCnt))) throw "1014: Invalid Input";
 
-  switch (true) {
+  switch (cardCnt) {
     // 4 Cards
-    case (cardCnt === 4):
+    case (4):
       return [[4,3,3,3], [4,4,3,2], [4,4,4,1]];
     // 5 Cards
-    case (cardCnt === 5):
+    case (5):
       return [[5,3,3,2], [5,4,2,2], [5,4,3,1], [5,5,2,1], [5,4,4,0], [5,5,3,0]];
     // 6 Cards
-    case (cardCnt === 6):
+    case (6):
       return [[6,3,2,2], [6,3,3,1], [6,4,2,1], [6,4,3,0], [6,5,1,1], [6,5,2,0], [6,6,1,0]];
     // 7 Cards
-    case (cardCnt === 7):
+    case (7):
       return [[7,2,2,2, 7,3,2,1, 7,3,3,0, 7,4,1,1, 7,4,2,0, 7,5,1,0, 7,6,0,0]];
     // 8 Cards
-    case (cardCnt === 8):
+    case (8):
       return [[8,2,2,1], [8,3,1,1], [8,3,2,0], [8,4,1,0], [8,5,0,0]];
     // 9 Cards
-    case (cardCnt === 9):
+    case (9):
       return [[9,2,1,1], [9,2,2,0], [9,3,1,0], [9,4,0,0]];
     // 10 Cards
-    case (cardCnt === 10):
+    case (10):
       return [[10,1,1,1], [10,2,1,0], [10,3,0,0]];
     // 11 Cards
-    case (cardCnt === 11):
+    case (11):
       return [[11,1,1,0], [11,2,0,0]];
     // 12 Cards
-    case (cardCnt === 12):
+    case (12):
         return [[12,1,0,0]];
     // 13 Cards
-    case (cardCnt === 13):
+    case (13):
       return [[13,0,0,0]];
   }
 
@@ -232,18 +232,18 @@ function longestSuitDistributions(cardCnt) {
 function handtypeProbability(handtype) {
   // handtype / 0: balanced, 1: 1-suiter, 2: 2-suiter, 3: 3-suiter
 
-  switch (true) {
+  switch (handtype) {
     // Balanced
-    case (handtype === 0):
+    case (0):
       return 47.61;
     // 1-Suiter
-    case (handtype === 1):
+    case (1):
       return 19.15;
     // 2-Suiter
-    case (handtype === 2):
+    case (2):
       return 29.02;
     // 3-Suiter
-    case (handtype === 3):
+    case (3):
       return 4.23;
   }
 
@@ -255,22 +255,22 @@ function handtypeProbability(handtype) {
 function handtypeDistributions(handtype) {
   // handtype / 0: balanced, 1: 1-suiter, 2: 2-suiter, 3: 3-suiter
 
-  switch (true) {
+  switch (handtype) {
     // Balanced
-    case (handtype === 0):
+    case (0):
       return [[4,3,3,3], [4,4,3,2], [5,3,3,2]];
     // 1-Suiter
-    case (handtype === 1):
+    case (1):
       return [[6,3,2,2], [6,3,3,1], [6,4,2,1], [6,4,3,0], 
               [7,2,2,2], [7,3,2,1], [7,3,3,0], [7,4,1,1], [7,4,2,0], [7,5,1,0], 
               [8,2,2,1], [8,3,1,1], [8,3,2,0], [8,4,1,0], [8,5,0,0], 
               [9,2,1,1], [9,2,2,0], [9,3,1,0], [9,4,0,0], [10,1,1,1], [10,2,1,0], [10,3,0,0], 
               [11,1,1,0], [11,2,0,0], [12,1,0,0], [13,0,0,0]];
     // 2-Suiter
-    case (handtype === 2):
+    case (2):
       return [[5,4,2,2], [5,4,3,1], [5,5,2,1], [5,5,3,0], [6,5,1,1], [6,5,2,0], [6,6,1,0], [7,6,0,0]];
     // 3-Suiter
-    case (handtype === 3):
+    case (3):
       return [[4,4,4,1], [5,4,4,0]];
   }
 
