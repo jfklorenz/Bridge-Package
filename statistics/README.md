@@ -1,26 +1,24 @@
 # Statistics
 
-
 ---
 
 ## Distribution
 | File | Status | Tested |
 | ------ | ------ | ------ |
-| *distribution.js* | final | - [ ] |
+| *distribution.js* | final | [ ] |
 
 You can calculate the *probability* of getting dealt a certain distribution and the respective number of possible hands.
 If a distribution is marked as **fix**, the suits are not interchangable meaning the first suit must mean clubs, the second diamonds and so on.
 If the **fix** attribute is marked as *false*, the length of a suit means *any* suit.
 
 ```javascript
-function distribution(ListOfSuitLength, fix = false)
-```
+[clubCnt, diamondCnt, heartCnt, spadeCnt] -> Boolean 
+function distribution(ListOfSuitLength)
 
-| Parameter | Type |
-| ------ | ------ |
-| **ListOfSuitLength** | [clubCnt, diamondCnt, heartCnt, spadeCnt] |
-| | [suitCnt, suitCnt, suitCnt, suitCnt]
-| **Fix** | *true* / *false* |
+[suitCnt, suitCnt, suitCnt, suitCnt] -> Boolean
+function distributionFix(ListofSuitLength)
+
+```
 
 ---
 
@@ -32,13 +30,9 @@ function distribution(ListOfSuitLength, fix = false)
 You can calculate the probability of getting dealt a hand within a certain range of *highcard points* (*hcp*) and the respective number of hands.
 
 ```javascript
+(Integer, Integer) -> probability
 function hcpRange(hcpMin, hcpMax = hcpMin)
 ```
-
-| Parameter | Type |
-| ------ | ------ |
-| **hcpMin** | Integer from [0, 37] |
-| **hcpMax** | Integer from [0, 37], hcpMax >= hcpMin |
 
 ---
 
