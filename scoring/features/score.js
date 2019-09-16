@@ -1,3 +1,5 @@
+// ================================================================
+// Scoring
 function score(level, suit, double, declarer, vulnerability, result) {
 
   // Exceptions
@@ -40,27 +42,29 @@ function score(level, suit, double, declarer, vulnerability, result) {
   // calculation
   let points = 0
   if (result >= 0) {
-      if (level == 0) {
-          points += points_contract[suit][0][double]
-      } else if (level > 0) {
+      if (level == 0) points += points_contract[suit][0][double];
+      else if (level > 0) {
         points += points_contract[suit][0][double];
         points += level * points_contract[suit][1][double];
       }
-      if (points < 100) {points += bonus_game[0][vulnerability]
-      } else {points += bonus_game[1][vulnerability]};
-      if (level >= 5) {points += bonus_slam[level - 5][vulnerability]};
+      if (points < 100) points += bonus_game[0][vulnerability];
+      else points += bonus_game[1][vulnerability];
+      if (level >= 5) points += bonus_slam[level - 5][vulnerability];
+      
       points += bonus_double[double];
-      if (result > 0) {points += result*overtrick[suit][vulnerability][double]};
-  } else if (result < 0) {
-    for (var i = 0; i < -result; i++) {
-        let j = i;
-        if (i > 3) {j = 3};
-        points -= undertricks[vulnerability][double][j]
-    }
-  }
-  if (declarer == 0 || declarer == 1) {return points
-  } else if (declarer == 2 || declarer == 3) {return -points};
+      
+      if (result > 0) points += result*overtrick[suit][vulnerability][double];
+      else if (result < 0) {
+        for (var i = 0; i < -result; i++) {
+            let j = i;
+            if (i > 3) j = 3;
+            points -= undertricks[vulnerability][double][j];
+        }
+      }
+  if (declarer == 0 || declarer == 1) return points;
+  else if (declarer == 2 || declarer == 3) return -points;
 }
 
+// ================================================================
 // Export
 module.exports = { score }
