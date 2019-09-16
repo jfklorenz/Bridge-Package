@@ -34,55 +34,70 @@ async function pbnParser(fileName) {
                 let game = {};
                 // For Each Game
                 for (var g = 0; g < gamesString[gs].length; g++) {
-                    let item = gamesString[gs][g]
-                    let key = item.substr(0,item.indexOf(' ')).slice(1);
-                    let value = item.substr(item.indexOf(' ')+1).slice(1, item.substr(item.indexOf(' ')+1).length - 2);
+                    let item = gamesString[gs][g].replace('[', '').replace(']', '').replace(/"/g, '');
+                    let key = item.substr(0,item.indexOf(' '));
+                    let value = item.substr(item.indexOf(' ')+1);
     
                     switch(key) {
+                        // 1 - Event
                         case ("Event"):
                             game.event = value;
                             break;
+                        // 2 - Site
                         case ("Site"):
                             game.site = value;
                             break;
+                        // 3 - Date
                         case ("Date"):
                             game.date = value;
                             break;
+                        // 4 - Board
                         case ("Board"):
                             game.board = value;
                             break;
-                        case ("North"):
-                            game.north = value;
-                            break;
-                        case ("East"):
-                            game.east = value;
-                            break;
-                        case ("South"):
-                            game.south = value;
-                            break;
+                        // 5 - West
                         case ("West"):
                             game.west = value;
                             break;
-                        case ("Deal"):
-                            game.deal = value;
+                        // 6 - Nord
+                        case ("North"):
+                            game.north = value;
                             break;
+                        // 7 - East
+                        case ("East"):
+                            game.east = value;
+                            break;
+                        // 8 - South
+                        case ("South"):
+                            game.south = value;
+                            break;
+                        // 9 - Dealer
                         case ("Dealer"):
                             game.dealer = value;
                             break;
+                        // 10 - Vulnerable
                         case ("Vulnerable"):
                             game.vulnerable = value;
                             break;
+                        // 11 - Deal
+                        case ("Deal"):
+                            game.deal = value;
+                            break;
+                        // 12 - Scoring
+                        case ("Score"):
+                            game.score = value;
+                            break;
+                        // 13 - Declarer
                         case ("Declarer"):
                             game.declarer = value;
                             break;
+                        // 14 - Contract
                         case ("Contract"):
                             game.contract = value;
                             break;
+                        // 15 - Result
                         case ("Result"):
                             game.result = value;
-                            break;
-                        case ("Score"):
-                            game.score = value;
                             break;
                         case ("HomeTeam"):
                             game.hometeam = value;
@@ -113,6 +128,10 @@ async function pbnParser(fileName) {
         }) 
     });
 }
+
+// ================================================================
+// Console.log
+//pbnParser('example.PBN').then(console.log)
 
 // ================================================================
 // Exports

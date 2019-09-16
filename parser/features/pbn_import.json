@@ -1,0 +1,108 @@
+{
+    "type": "PBNfile",  
+    "describe": "A valid PBN import file",
+
+    "Event": {
+        "type": "string"
+    },
+
+    "Site": {
+        "_comment": "ISO 3166 (or, EN 23166)",
+        "type": "string"
+    },
+
+    "Date": {
+        "_comment": "starting date of game, not event",
+        "_comment2": "YYYY.MM.DD",
+        "type": "date"
+    },
+
+    "Board": {
+        "_comment": "postive",
+        "type": "integer"
+    },
+
+    "West": {
+        "_comment": "Last name, first name/initial. middle initials",
+        "type": "string"
+    },
+
+    "North": {
+        "_comment": "Name of the North player.",
+        "type": "string"
+    },
+
+    "East": {
+        "_comment": "Name of the East player.",
+        "type": "string"
+    },
+
+    "South": {
+        "_comment": "Name of the South player.",
+        "type": "string"
+    },
+
+    "Dealer": {
+        "type": "string",
+        "enum": ["W", "N", "E", "S"]
+    },
+
+    "Vulnerable": {
+        "type": "string",
+        "enum": ["None", "Love", "-", "NS", "EW", "All", "Both"]
+    },
+
+    "Deal": {
+        "_comment": "Dealer: spades.hearts.diamonds.clubs spades.../ clockwise from dealer",
+        "_example": "N:.63.AKQ987.A9732 A8654.KQ5.T.QJT6 J973.J98742.3.K4 KQT2.AT.J6542.85"
+    },
+
+    "Scoring": {
+        "_comment": "System;Modifier;Modifier;...",
+        "type": "string",
+        "system": {
+            "type": "string", 
+            "enum": ["MP", "IMP", "Rubber", "BAM", "Instant", "Cavendish", "Chicago"]
+        },
+        "modifier": {
+            "type": "string",
+            "enum": ["Butler", "Exports", "Cross", "Mean", "Median", "EMP", "IMP_1948", "IMP_1961"]
+        }
+    },
+
+    "Declarer": {
+        "_comment": "^ indicates swapped dummy and declarer",
+        "Pass": "",
+        "type": "string",
+        "enum": ["W", "^W", "N", "^N", "E", "^E", "S", "^S", ""]
+    },
+
+    "Contract": {
+        "_comment": "Pass or real contract <k><denomination><risk>",
+        "type": "string",
+        "k": {
+            "type": "integer",
+            "enum": [1,2,3,4,5,6,7]
+        },
+        "denomination": {
+            "type": "string",
+            "enum": ["S", "H", "D", "C", "NT"]
+        },
+        "risk": {
+            "enum": [null, "X", "XX"]
+        }
+    },
+
+    "Result": {
+        "_comment": "<result>, EW <result>, NS <result>, EW <result> NS <result>, NS <result> EW <result>",
+        "_comment2": "^ indicates difference from actual number",
+        "_comment3": "string vs int??",
+        "_comment4": "all pass equals empty string",
+        "type": "string",
+        "enum": [""],
+        "<result>": {
+            "type": "integer?",
+            "enum": [0,1,2,3,4,5,6,7,8,9,10,11,12,13]
+        }
+    }
+}
