@@ -148,7 +148,7 @@ function shortestSuitDistributions(cardCnt) {
 // ================================================================
 // Longest Suit / Probability
 function longestSuitProbability(cardCnt) {
-  if (!([...Array(14).keys(4)].includes(cardCnt))) throw "1014: Invalid Input";
+  if (!([...Array(14).keys()].slice(4).includes(cardCnt))) throw "1014: Invalid Input";
 
   switch (cardCnt) {
     // 4 Cards
@@ -189,7 +189,7 @@ function longestSuitProbability(cardCnt) {
 // ================================================================
 // Longest Suit / Distributions
 function longestSuitDistributions(cardCnt) {
-  if (!([...Array(14).keys(4)].includes(cardCnt))) throw "1014: Invalid Input";
+  if (!([...Array(14).keys()].slice(4).includes(cardCnt))) throw "1014: Invalid Input";
 
   switch (cardCnt) {
     // 4 Cards
