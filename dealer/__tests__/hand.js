@@ -11,11 +11,8 @@ describe("test/Hand - A single playing Hand", function() {
               new Card(29), new Card(33), new Card(38), 
               new Card(41), new Card(42), new Card(45), new Card(49)]);
 
-    console.log(hand.cardCnt);
     expect(hand.cardCnt).to.eql(13);
     expect(hand.fullHand).to.eql(true);
-
-
   });
 
   // ================================================================
