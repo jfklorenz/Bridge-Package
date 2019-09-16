@@ -1,54 +1,36 @@
-const { shuffle } = require("../features/shuffle.js")
-const Card = require("../features/card.js");
-const Hand = require("../features/hand.js");
+const Card = require("../../dealer/features/card.js");
 
 // ================================================================
-class Deck {
-  constructor() {
-    this.cards = []
-    this.init();
-  }
-
-  init () {
-    for (var i = 0; i < 52; i++) {
-      this.cards.push(new Card(i));
-    }
-  }
-
-  shuffle() {
-    this.cards = shuffle(this.cards);
-  }
-
-  draw(cardCnt) {
-    let draw = [];
-    for (var i = 0; i < cardCnt; i++) {
-      draw.push(this.cards.pop());
-    }
-    return draw;
-  }
-
-  deal(cardCnt, hand) {
-    for (var i = 0; i < cardCnt; i++) {
-      hand.cards.push(this.cards.pop());
-    }
-  }
-
-  get length() {
-    return this.cards.length;
+function analyzeCardHcp(card) {
+  switch(card.rank) {
+    case(12):
+      return 4;
+    case(11):
+      return 3;
+    case(10):
+      return 2;
+    case(9):
+      return 1;
+    default:
+      return 0;
   }
 }
 
+function analyzeCardControls(card) {
+  switch(card.rank) {
+    case(12):
+      return 2;
+    case(11):
+      return 1;
+    default:
+      return 0;
+  }
+}
+
+
+
+console.log(analyzeCardHcp(new Card(11)));
+console.log(analyzeCardHcp(new Card(22)));
+
 // ================================================================
 
-let deck = new Deck();
-deck.shuffle();
-let hand = new Hand();
-deck.deal(13, hand);
-
-console.log(deck.length);
-console.log(hand.all);
-console.log("");
-console.log(deck.draw(4));
-
-// ================================================================
-module.exports = Deck
