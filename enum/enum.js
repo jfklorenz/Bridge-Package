@@ -17,6 +17,26 @@ const Enum = Object.freeze({
         4: 'notrump'
     }),
 
+    // Level
+    level2num: Object.freeze({
+        1: 0,
+        2: 1,
+        3: 2,
+        4: 3,
+        5: 4,
+        6: 5,
+        7: 6
+    }),
+    level2num: Object.freeze({
+        0: 1,
+        1: 2,
+        2: 3,
+        3: 4,
+        4: 5,
+        5: 6,
+        6: 7
+    }),
+
     // Vulnerable
     vulnerable2num: Object.freeze({
         'none': 0,
