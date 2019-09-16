@@ -8,7 +8,7 @@ describe('test/parser.js - PBN Parser', function() {
   // PBN Parser
   it("1.0. PBN Parser / Input", function() {
     // Input not a PBN File
-
+    
   });
 
   it("1.1. PBN Parser / Example 1", async function() {
@@ -46,9 +46,9 @@ describe('test/parser.js - PBN Parser', function() {
     expect(game1.hometeam).to.eql('HomeTeam 1');
     expect(game1.room).to.eql('Room 1');
     expect(game1.round).to.eql('Round 1');
-    expect(game1.event).to.eql('Score 1');
-    expect(game1.event).to.eql('Table 1');
-    expect(game1.event).to.eql('VisitTeam 1');
+    expect(game1.score).to.eql('Score 1');
+    expect(game1.table).to.eql('Table 1');
+    expect(game1.visitteam).to.eql('VisitTeam 1');
     // expect(game1.event).to.eql('Auction 1');
     // expect(game1.event).to.eql('Play 1');
     // expect(game1.event).to.eql('* 1');
@@ -71,9 +71,9 @@ describe('test/parser.js - PBN Parser', function() {
     expect(game2.hometeam).to.eql('HomeTeam 2');
     expect(game2.room).to.eql('Room 2');
     expect(game2.round).to.eql('Round 2');
-    expect(game2.event).to.eql('Score 2');
-    expect(game2.event).to.eql('Table 2');
-    expect(game2.event).to.eql('VisitTeam 2');
+    expect(game2.score).to.eql('Score 2');
+    expect(game2.table).to.eql('Table 2');
+    expect(game2.visitteam).to.eql('VisitTeam 2');
     // expect(game2.event).to.eql('Auction 2');
     // expect(game2.event).to.eql('Play 2');
     // expect(game2.event).to.eql('* 2');

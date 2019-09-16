@@ -41,48 +41,70 @@ async function pbnParser(fileName) {
                     switch(key) {
                         case ("Event"):
                             game.event = value;
+                            break;
                         case ("Site"):
                             game.site = value;
+                            break;
                         case ("Date"):
                             game.date = value;
+                            break;
                         case ("Board"):
                             game.board = value;
+                            break;
                         case ("North"):
                             game.north = value;
+                            break;
                         case ("East"):
                             game.east = value;
+                            break;
                         case ("South"):
                             game.south = value;
+                            break;
                         case ("West"):
                             game.west = value;
+                            break;
                         case ("Deal"):
                             game.deal = value;
+                            break;
                         case ("Dealer"):
                             game.dealer = value;
+                            break;
                         case ("Vulnerable"):
                             game.vulnerable = value;
+                            break;
                         case ("Declarer"):
                             game.declarer = value;
+                            break;
                         case ("Contract"):
                             game.contract = value;
+                            break;
                         case ("Result"):
                             game.result = value;
+                            break;
                         case ("Score"):
                             game.score = value;
+                            break;
                         case ("HomeTeam"):
                             game.hometeam = value;
+                            break;
                         case ("Room"):
                             game.room = value;
+                            break;
                         case ("Round"):
                             game.round = value;
+                            break;
                         case ("VisitTeam"):
                             game.visitteam = value;
+                            break;
                         case ("Table"):
                             game.table = value;
+                            break;
                         case ("Auction"):
                             game.auction = value;
+                            break;
                         case ("*"):
                             game.comment = value;
+                            break;
                     }
                 }
                 games.push(game);
