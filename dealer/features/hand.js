@@ -30,6 +30,14 @@ class Hand {
     return this.distribution[3];
   }
 
+  get shortestSuit() {
+    return Math.min(...this.distribution);
+  }
+
+  get longestSuit() {
+    return Math.max(...this.distribution)
+  }
+
   get clubs() {
     let clubs = [];
     for (var  i = 0; i < this.cards.length; i++) {
@@ -81,7 +89,7 @@ class Hand {
     return all.reverse();
   }
 
-  get cardCnt() {
+  get handSize() {
     return this.cards.length;
   }
 
@@ -103,6 +111,19 @@ class Hand {
 }
 
 // ================================================================
+// Console.log
+
+/*
+let hand = new Hand;
+    hand.draw([new Card(0), new Card(3), new Card(12), 
+              new Card(15), new Card(16), new Card(18), 
+              new Card(29), new Card(33), new Card(38), 
+              new Card(41), new Card(42), new Card(45), new Card(49)]);
+
+console.log(hand)
+console.log(hand.shortestSuit)
+*/
 
 // ================================================================
+// Exports
 module.exports = Hand
