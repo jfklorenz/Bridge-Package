@@ -1,23 +1,23 @@
-# Code
+# Parser
 
----
+## Features
+The **features** folder contains the source code.
 
-## Analyzer
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
 
+## Tests
+The **__ tests __** folder contains test cases for the source code.
 
----
-
-## Dealer
-
-
----
-
-## Movements
-
----
-
-## Scoring
-
----
-
-## Statistics
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
+- [ ] 
