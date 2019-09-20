@@ -5,7 +5,7 @@ This is a **Javascript** package for the card game **Contract Bridge**.
 ---
 
 
-## Dealer
+## [Dealer](https://github.com/jfklorenz/Package-Bridge/blob/master/dealer/README.md "Link / Dealer")
 
 Deal and play a game of bridge.
 
@@ -21,7 +21,7 @@ Deal and play a game of bridge.
 
 ---
 
-## Movements
+## [Movements](https://github.com/jfklorenz/Package-Bridge/blob/master/movements/README.md "Link / Movements")
 
 Different movements for pair tournaments.
 
@@ -37,7 +37,7 @@ Different movements for pair tournaments.
 
 ---
 
-## Scoring
+## [Scoring](https://github.com/jfklorenz/Package-Bridge/blob/master/scoring/README.md "Link / Scoring")
 
 Different forms of scoring for pair and team tournaments.
 
@@ -48,7 +48,7 @@ Different forms of scoring for pair and team tournaments.
 
 ---
 
-## Statistics
+## [Statistics](https://github.com/jfklorenz/Package-Bridge/blob/master/statistics/README.md "Link / Statistics")
 
 Statistics and probabilities about distributions, high cards and missing cards.
 
