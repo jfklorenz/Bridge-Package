@@ -161,7 +161,7 @@ class Card {
   @return {Card} the respective Card
   */
   static fromDE(rank, suit) {
-    return this.fromLocale("de", rank, suit);
+    return this.fromLocale(rank, suit, "de");
   }
 
   // ----------------------------------------------------------------
@@ -198,12 +198,21 @@ class Card {
   }
 
   // ----------------------------------------------------------------
+  /*
+  Calls toStringLocale with locale = "en".
+  @returns {string} String representation of the Card
+  */
   toString() {
     return this.toStringLocale("en");
   }
 
   // ----------------------------------------------------------------
-  toStringLocale(locale) {
+  /*
+  Gives a (human readable) String representation of the Card.
+  @param {string} locale
+  @returns {string} String representation of the Card
+  */
+  toStringLocale(locale = "en") {
     return LOCALES.toString[locale](
       Card._rankToString(this.rank, locale), 
       Card._suitToString(this.suit, locale)
@@ -220,7 +229,6 @@ console.log(Card.fromENS("6c").toStringLocale("ens"));
 console.log(Card.fromENS("6c").toStringLocale("en"));
 let card2 = new Card("7", "Spades");
 */
-
 
 // ================================================================
 module.exports = Card

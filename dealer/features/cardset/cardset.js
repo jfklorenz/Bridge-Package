@@ -1,6 +1,6 @@
 // ================================================================
 // Imports
-const Card = require("./card.js");
+const Card = require("../card/card.js");
 
 // ================================================================
 // Parameters
@@ -21,11 +21,56 @@ class CardSet {
   constructor() {
     this.cards = []
   }
+  // ================================================================
+  // 2. Cards
+  // ================================================================
+  // 2.1. Shuffle
+  shuffle() {
+    var currentIndex = this.cards.length, temporaryValue, randomIndex;
+  
+    while (0 !== currentIndex) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+      temporaryValue = this.cards[currentIndex];
+      this.cards[currentIndex] = this.cards[randomIndex];
+      this.cards[randomIndex] = temporaryValue;
+    }
+  }
+  
+  // ----------------------------------------------------------------
+  // 2.1. Add Card
+  addCard(card) {
+    this.cards.push(card);
+    return;
+  }
+
+  // ----------------------------------------------------------------
+  // 2.2. Add Cards
+  addCards(cards) {
+    for (var c = 0; c < cards.length; c++) {
+      this.cards.push(cards[c])
+    }
+    return;
+  }
+
+  // ----------------------------------------------------------------
+  // 2.3. Remove Card
+  removeCard(card) {
+    this.cards = this.cards.filter(c => !c.equals(card));
+    return
+  }
+  // ----------------------------------------------------------------
+  // 2.4. Remove Cards
+  removeCards(cards) {
+    for (var card in cards) {
+      this.removeCard(card)
+    }
+  }
 
   // ================================================================
-  // Suits
+  // 3. Suits
   // ================================================================
-  // Cards
+  // 3.1. Suit
   suit(suit) {
     switch(suit) {
       case (0 || "Clubs" || "c" || "Treff" || "t"):
@@ -38,75 +83,129 @@ class CardSet {
         return this.spades
     }
   }
+
+  // ----------------------------------------------------------------
+  // 3.1. Clubs
   get clubs() {
     return this.cards.filter(c => c.suit === 0);
   }
+
+  // ----------------------------------------------------------------
+  // 3.2. Diamonds
   get diamonds() {
     return this.cards.filter(c => c.suit === 1);
   }
+
+  // ----------------------------------------------------------------
+  // 3.3. Hearts
   get hearts() {
     return this.cards.filter(c => c.suit === 2);
   }
+
+  // ----------------------------------------------------------------
+  // 3.4. Spades
   get spades() {
     return this.cards.filter(c => c.suit === 3);
   }
+
   // ----------------------------------------------------------------
-  // Number of Cards 
+  // 3.5. Club Count 
   get club() {
     return this.clubs.length;
   }
+
+  // ----------------------------------------------------------------
+  // 3.6. Diamond Count
   get diamond() {
     return this.diamonds.length;
   }
+
+  // ----------------------------------------------------------------
+  // 3.7. Heart Count
   get heart() {
     return this.hearts.length;
   }
+
+  // ----------------------------------------------------------------
+  // 3.8. Spade Count
   get spade() {
     return this.spades.length;
   }
 
   // ================================================================
-  // Distribution
+  // 4. Distributions
+  // ================================================================
+  // 4.1. Distribution
   get distribution() {
     return [this.club, this.diamond, this.heart, this.spade];
   }
 
+  // ----------------------------------------------------------------
+  // 4.2. Shortest Suit
   get shortestSuit() {
     return Math.min(...this.distribution);
   }
 
+  // ----------------------------------------------------------------
+  // 4.3. Longest Suit
   get longestSuit() {
     return Math.max(...this.distribution);
   }
 
   // ----------------------------------------------------------------
-  // Handtype
-  get handtype() {
-    const handtypes = ["Balanced", "1-Suiter", "2-Suiter", "3-Suiter"];
-    for (var h = 0; h < handtypes.length; h++) {
-      if (this._hasSubArray(HANDTYPES[handtypes[h]], this.distribution.sort(function(a, b){return b-a}))) {
-        return handtypes[h];
+  // 4.4. Handsize
+  get handsize() {
+    return this.cards.length;
+  }
+
+  // ----------------------------------------------------------------
+  // 4.5. is Full Hand
+  get isFull() {
+    return this.handsize === 13;
+  }
+
+  // ----------------------------------------------------------------
+  // 4.6. is Empty Hand
+  get isEmpty() {
+    return this.handsize === 0;
+  }
+
+  // ----------------------------------------------------------------
+  // 4.7. is Deck
+  get isDeck() {
+    return this.handsize === 52;
+  }
+
+  // ----------------------------------------------------------------
+  // 4.8. is Valid (no duplicates)
+  get isValid() {
+
+    for (var i = 0; i < this.cards.length; i++) {
+      for (var j = i + 1; j < this.cards.length; j++) {
+        if (this.cards[i].rank === this.cards[j].rank && this.cards[i].suit === this.cards[j].suit) {
+            return false;
+        }
       }
     }
-    return "No Type";
+    return true;
   }
 
   // ================================================================
-  // Bridge
+  // 5. Bridge Related
   // ================================================================
-  // Highcard Points (HCP)
+  // 5.1. Highcard Points (HCP)
   get hcp() {
     return this.cards.reduce((a, b) => a + b.hcp, 0);
   }
 
   // ----------------------------------------------------------------
-  // controls
+  // 5.2. Control Points
   get controls() {
     return this.cards.reduce((a, b) => a + b.controls, 0);
   }
 
   // ----------------------------------------------------------------
-  // Distribution Points
+  // 5.3. Distribution Points
   get distributionPoints() {
     let points = 0;
     switch(true) {
@@ -120,59 +219,16 @@ class CardSet {
     return points;
   }
 
-  // ================================================================
-  // Functionality
-  // ================================================================
-  // Add Card
-  addCard(card) {
-    this.cards.push(card);
-    return
-  }
-
   // ----------------------------------------------------------------
-  // Remove Card
-  removeCard(card) {
-    this.cards = this.cards.filter(c => !c.equals(card));
-    return
-  }
-
-  // ----------------------------------------------------------------
-  // Shuffle
-  shuffle() {
-    var currentIndex = this.cards.length, temporaryValue, randomIndex;
-  
-    while (0 !== currentIndex) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex -= 1;
-      temporaryValue = this.cards[currentIndex];
-      this.cards[currentIndex] = this.cards[randomIndex];
-      this.cards[randomIndex] = temporaryValue;
-    }
-  }
-
-  // ----------------------------------------------------------------
-  // Hand is Valid, i.e. no Duplicates
-  get isValid() {
-    return this.cards.length === this.cards.reduce((unique, o) => {
-      if(!unique.some(obj => obj.rank === o.rank && obj.suit === o.suit)) {
-        unique.push(o);
+  // 5.4. Handtype
+  get handtype() {
+    const handtypes = ["Balanced", "1-Suiter", "2-Suiter", "3-Suiter"];
+    for (var h = 0; h < handtypes.length; h++) {
+      if (this._hasSubArray(HANDTYPES[handtypes[h]], this.distribution.sort(function(a, b){return b-a}))) {
+        return handtypes[h];
       }
-      return unique;
-  },[]).length;
-  }
-
-  // ----------------------------------------------------------------
-  // Handsize
-  get handsize() {
-    return this.cards.length;
-  }
-
-  get isFull() {
-    return this.handsize === 13;
-  }
-
-  get isEmpty() {
-    return this.handsize === 0;
+    }
+    return "No Type";
   }
 
   _hasSubArray(master, sub) {
@@ -182,34 +238,6 @@ class CardSet {
 
 // ================================================================
 // Console.log
-
-let hand = new CardSet;
-hand.addCard(new Card(0,0));
-hand.addCard(new Card(1,0));
-hand.addCard(new Card(2,0));
-hand.addCard(new Card(3,0));
-hand.addCard(new Card(0,1));
-hand.addCard(new Card(1,1));
-hand.addCard(new Card(2,1));
-hand.addCard(new Card(0,2));
-hand.addCard(new Card(1,2));
-hand.addCard(new Card(2,2));
-hand.addCard(new Card(0,3));
-hand.addCard(new Card(1,3));
-hand.addCard(new Card(2,3));
-
-hand.shuffle()
-console.log(hand.cards);
-console.log("distribution", hand.distribution)
-console.log("isEmpty", hand.isEmpty);
-console.log("isFull", hand.isFull);
-console.log("handsize", hand.handsize)
-console.log("distPoints", hand.distributionPoints)
-console.log("shortestSuit", hand.shortestSuit)
-console.log("longestSuit", hand.longestSuit)
-console.log("handtype", hand.handtype)
-console.log("VALID", hand.isValid)
-
 
 // ================================================================
 // Exports

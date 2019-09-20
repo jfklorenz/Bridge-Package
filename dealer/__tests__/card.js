@@ -1,5 +1,5 @@
 const expect = require("expect.js");
-const Card = require("../features/card.js");
+const Card = require("../features/card/card.js");
 
 // ================================================================
 describe('test/card - A single playing card', function() {
@@ -27,33 +27,33 @@ describe('test/card - A single playing card', function() {
   // 1.0. fromLocale
   it("1.0.0. fromLocale - Error", function() {
     // Invalid Rank
-    expect((locale, rank, suit) => Card.fromLocale(locale, rank, suit)).withArgs("en", 0, "Spades").to.throwException();
-    expect((locale, rank, suit) => Card.fromLocale(locale, rank, suit)).withArgs("en", -3, "Spades").to.throwException();
-    expect((locale, rank, suit) => Card.fromLocale(locale, rank, suit)).withArgs("en", "Z", "Spades").to.throwException();
-    expect((locale, rank, suit) => Card.fromLocale(locale, rank, suit)).withArgs("en", "/", "Spades").to.throwException();
+    expect((rank, suit, locale) => Card.fromLocale(rank, suit, locale)).withArgs(0, "Spades", "en").to.throwException();
+    expect((rank, suit, locale) => Card.fromLocale(rank, suit, locale)).withArgs(-3, "Spades", "en").to.throwException();
+    expect((rank, suit, locale) => Card.fromLocale(rank, suit, locale)).withArgs("Z", "Spades","en").to.throwException();
+    expect((rank, suit, locale) => Card.fromLocale(rank, suit, locale)).withArgs("/", "Spades", "en").to.throwException();
     // Invalid Suit
-    expect((locale, rank, suit) => Card.fromLocale(locale, rank, suit)).withArgs("en", "2", "pades").to.throwException();
-    expect((locale, rank, suit) => Card.fromLocale(locale, rank, suit)).withArgs("en", "3", 0).to.throwException();
-    expect((locale, rank, suit) => Card.fromLocale(locale, rank, suit)).withArgs("en", "4", 3).to.throwException();
-    expect((locale, rank, suit) => Card.fromLocale(locale, rank, suit)).withArgs("en", "5", "banana").to.throwException();
+    expect((rank, suit, locale) => Card.fromLocale(rank, suit, locale)).withArgs("2", "pades", "en").to.throwException();
+    expect((rank, suit, locale) => Card.fromLocale(rank, suit, locale)).withArgs("3", 0, "en").to.throwException();
+    expect((rank, suit, locale) => Card.fromLocale(rank, suit, locale)).withArgs("4", 3, "en").to.throwException();
+    expect((rank, suit, locale) => Card.fromLocale(rank, suit, locale)).withArgs("5", "banana", "en").to.throwException();
     // Locale
-    expect((locale, rank, suit) => Card.fromLocale(locale, rank, suit)).withArgs("ne", "2", "Spades").to.throwException();
-    expect((locale, rank, suit) => Card.fromLocale(locale, rank, suit)).withArgs("ed", "3", "Clubs").to.throwException();
-    expect((locale, rank, suit) => Card.fromLocale(locale, rank, suit)).withArgs("ger", "9", "Diamonds").to.throwException();
-    expect((locale, rank, suit) => Card.fromLocale(locale, rank, suit)).withArgs("us", "5", "Hearts").to.throwException();
+    expect((rank, suit, locale) => Card.fromLocale(rank, suit, locale)).withArgs("2", "Spades", "ne").to.throwException();
+    expect((rank, suit, locale) => Card.fromLocale(rank, suit, locale)).withArgs("3", "Clubs", "ed").to.throwException();
+    expect((rank, suit, locale) => Card.fromLocale(rank, suit, locale)).withArgs("9", "Diamonds", "ger").to.throwException();
+    expect((rank, suit, locale) => Card.fromLocale(rank, suit, locale)).withArgs("5", "Hearts", "us").to.throwException();
   });
 
   // ----------------------------------------------------------------
   it("1.0.1. fromLocale - Validation", function() {
     // Validation
-    expect(Card.fromLocale("en", "2","Clubs")).to.eql(new Card(0,0));
-    expect(Card.fromLocale("en", "4","Clubs")).to.eql(new Card(2,0));
-    expect(Card.fromLocale("en", "6","Diamonds")).to.eql(new Card(4,1));
-    expect(Card.fromLocale("en", "8","Diamonds")).to.eql(new Card(6,1));
-    expect(Card.fromLocale("en", "T","Hearts")).to.eql(new Card(8,2));
-    expect(Card.fromLocale("en", "J","Hearts")).to.eql(new Card(9,2));
-    expect(Card.fromLocale("en", "Q","Spades")).to.eql(new Card(10,3));
-    expect(Card.fromLocale("en", "A","Spades")).to.eql(new Card(12,3));
+    expect(Card.fromLocale("2","Clubs","en")).to.eql(new Card(0,0));
+    expect(Card.fromLocale("4","Clubs","en")).to.eql(new Card(2,0));
+    expect(Card.fromLocale("6","Diamonds","en")).to.eql(new Card(4,1));
+    expect(Card.fromLocale("8","Diamonds","en")).to.eql(new Card(6,1));
+    expect(Card.fromLocale("T","Hearts")).to.eql(new Card(8,2));
+    expect(Card.fromLocale("J","Hearts")).to.eql(new Card(9,2));
+    expect(Card.fromLocale("Q","Spades")).to.eql(new Card(10,3));
+    expect(Card.fromLocale("A","Spades")).to.eql(new Card(12,3));
   });
 
   // ================================================================
@@ -170,7 +170,80 @@ describe('test/card - A single playing card', function() {
   // ================================================================
   // 2 - Intern / String Formatting
   // ================================================================
+  // 2.0. toString
+  it("2.1. toString - Validation", function() {
+    expect(Card.fromENS("6s").toString()).to.eql("6 of Spades");
+    expect(Card.fromENS("Td").toString()).to.eql("T of Diamonds");
+    expect(Card.fromENS("Ac").toString()).to.eql("A of Clubs");
+  });
+
   // 2.1. Rank -> String
+  it("2.1. _rankToString - Validation", function() {
+    expect(Card._rankToString(12)).to.eql("A");
+    expect(Card._rankToString(8)).to.eql("T");
+    expect(Card._rankToString(0)).to.eql("2");
+  });  
+
+  // 2.2. Suit -> String
+  it("2.2. _suitToString - Validation", function() {
+    expect(Card._suitToString(0)).to.eql("Clubs");
+    expect(Card._suitToString(1)).to.eql("Diamonds");
+    expect(Card._suitToString(2)).to.eql("Hearts");
+    expect(Card._suitToString(3)).to.eql("Spades");
+  });  
+
+  // 2.3. Rank -> Integer
+  it("2.3. _rankToInteger - Validation", function() {
+    expect(Card._rankToInteger("A")).to.eql(12);
+    expect(Card._rankToInteger("Q")).to.eql(10);
+    expect(Card._rankToInteger("2")).to.eql(0);
+  });
+
+  // 2.4. Suit -> Integer
+  it("2.4. _suitToInteger - Validation", function() {
+    expect(Card._suitToInteger("Clubs")).to.eql(0);
+    expect(Card._suitToInteger("Diamonds")).to.eql(1);
+    expect(Card._suitToInteger("Hearts")).to.eql(2);
+    expect(Card._suitToInteger("Spades")).to.eql(3);
+  });
+
+  // ================================================================
+  // 3. Bridge Related
+  // ================================================================
+  // 3.1. Highcard Points (HCP)
+  it("3.1. Highcard Points - Validation", function() {
+    for (var rank = 0; rank < 13; rank++) {
+      for (var suit = 0; suit < 4; suit++) {
+        if (rank === 12) {
+          expect(new Card(rank,suit).hcp).to.eql(4)
+        } else if (rank === 11) {
+          expect(new Card(rank,suit).hcp).to.eql(3)
+        } else if (rank === 10) {
+          expect(new Card(rank,suit).hcp).to.eql(2)
+        } else if (rank === 9) {
+          expect(new Card(rank,suit).hcp).to.eql(1)
+        } else {
+          expect(new Card(rank,suit).hcp).to.eql(0)
+        }
+      }
+    }
+  });
+
+  // 3.2. Controls
+  it("3.2. Controls - Validation", function() {
+    for (var rank = 0; rank < 13; rank++) {
+      for (var suit = 0; suit < 4; suit++) {
+        if (rank === 12) {
+          expect(new Card(rank,suit).controls).to.eql(2)
+        } else if (rank === 11) {
+          expect(new Card(rank,suit).controls).to.eql(1)
+        } else {
+          expect(new Card(rank,suit).controls).to.eql(0)
+        }
+      }
+    }
+  });
+
 });
 
 // ================================================================
