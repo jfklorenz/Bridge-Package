@@ -22,10 +22,57 @@ describe('test/card - A single playing card', function() {
   });
 
   // ================================================================
-  // 1. - from
+  // 2 - Base Attributes & Representation
   // ================================================================
-  // 1.0. fromLocale
-  it("1.0.0. fromLocale - Error", function() {
+  // 2.1. rank
+  // ----------------------------------------------------------------
+  // 2.2. suit
+  // ----------------------------------------------------------------
+  it("2.3. toString - Validation", function() {
+    expect(Card.fromENS("6s").toString()).to.eql("6 of Spades");
+    expect(Card.fromENS("Td").toString()).to.eql("T of Diamonds");
+    expect(Card.fromENS("Ac").toString()).to.eql("A of Clubs");
+  });
+
+  // ----------------------------------------------------------------
+  it("2.4. toStringLocale - Validation", function() {
+    // ToDo
+  });
+
+  // ----------------------------------------------------------------
+  it("2.5. _rankToInteger - Validation", function() {
+    expect(Card._rankToInteger("A")).to.eql(12);
+    expect(Card._rankToInteger("Q")).to.eql(10);
+    expect(Card._rankToInteger("2")).to.eql(0);
+  });
+
+  // ----------------------------------------------------------------
+  it("2.6. _rankToString - Validation", function() {
+    expect(Card._rankToString(12)).to.eql("A");
+    expect(Card._rankToString(8)).to.eql("T");
+    expect(Card._rankToString(0)).to.eql("2");
+  }); 
+
+  // ----------------------------------------------------------------
+  it("2.7. _suitToInteger - Validation", function() {
+    expect(Card._suitToInteger("Clubs")).to.eql(0);
+    expect(Card._suitToInteger("Diamonds")).to.eql(1);
+    expect(Card._suitToInteger("Hearts")).to.eql(2);
+    expect(Card._suitToInteger("Spades")).to.eql(3);
+  });
+
+  // ----------------------------------------------------------------
+  it("2.8. _suitToString - Validation", function() {
+    expect(Card._suitToString(0)).to.eql("Clubs");
+    expect(Card._suitToString(1)).to.eql("Diamonds");
+    expect(Card._suitToString(2)).to.eql("Hearts");
+    expect(Card._suitToString(3)).to.eql("Spades");
+  });
+
+  // ================================================================
+  // 3. Card Generation
+  // ================================================================
+  it("3.1.0. fromLocale - Error", function() {
     // Invalid Rank
     expect((rank, suit, locale) => Card.fromLocale(rank, suit, locale)).withArgs(0, "Spades", "en").to.throwException();
     expect((rank, suit, locale) => Card.fromLocale(rank, suit, locale)).withArgs(-3, "Spades", "en").to.throwException();
@@ -44,7 +91,7 @@ describe('test/card - A single playing card', function() {
   });
 
   // ----------------------------------------------------------------
-  it("1.0.1. fromLocale - Validation", function() {
+  it("3.1.1. fromLocale - Validation", function() {
     // Validation
     expect(Card.fromLocale("2","Clubs","en")).to.eql(new Card(0,0));
     expect(Card.fromLocale("4","Clubs","en")).to.eql(new Card(2,0));
@@ -56,10 +103,8 @@ describe('test/card - A single playing card', function() {
     expect(Card.fromLocale("A","Spades")).to.eql(new Card(12,3));
   });
 
-  // ================================================================
-  
-  // 1.1. fromEN
-  it("1.1.0. fromEN - Error", function() {
+  // ----------------------------------------------------------------
+  it("3.2.0. fromEN - Error", function() {
     // Invalid Rank
     expect((rank, suit) => Card.fromEN(rank, suit)).withArgs(0, "Spades").to.throwException();
     expect((rank, suit) => Card.fromEN(rank, suit)).withArgs(-3, "Spades").to.throwException();
@@ -73,7 +118,7 @@ describe('test/card - A single playing card', function() {
   });
 
   // ----------------------------------------------------------------
-  it("1.1.1. fromEN - Validation", function() {
+  it("3.2.1. fromEN - Validation", function() {
     // Validation
     expect(Card.fromEN("2","Clubs")).to.eql(new Card(0,0));
     expect(Card.fromEN("4","Clubs")).to.eql(new Card(2,0));
@@ -85,9 +130,8 @@ describe('test/card - A single playing card', function() {
     expect(Card.fromEN("A","Spades")).to.eql(new Card(12,3));
   });
 
-  // ================================================================
-  // 1.2. - fromENS
-  it("1.2.0. fromENS - Error", function() {
+  // ----------------------------------------------------------------
+  it("3.3.0. fromENS - Error", function() {
     // Invalid input
     expect((ranksuit) => Card.fromENS(ranksuit)).withArgs("Spades").to.throwException();
     expect((ranksuit) => Card.fromENS(ranksuit)).withArgs("6kpades").to.throwException();
@@ -100,7 +144,7 @@ describe('test/card - A single playing card', function() {
   });
 
   // ----------------------------------------------------------------
-  it("1.2.1. fromENS - Validation", function() {
+  it("3.3.1. fromENS - Validation", function() {
     // Validation
     expect(Card.fromENS("2c")).to.eql(new Card(0,0));
     expect(Card.fromENS("4c")).to.eql(new Card(2,0));
@@ -112,9 +156,8 @@ describe('test/card - A single playing card', function() {
     expect(Card.fromENS("As")).to.eql(new Card(12,3));
   });
 
-  // ================================================================
-  // 1.3. - fromDE
-  it("1.3.0. fromDE - Error", function() {
+  // ----------------------------------------------------------------
+  it("3.3.0. fromDE - Error", function() {
      // Invalid Rank
      expect((rank, suit) => Card.fromDE(rank, suit)).withArgs(0, "Pik").to.throwException();
      expect((rank, suit) => Card.fromDE(rank, suit)).withArgs(-3, "Pik").to.throwException();
@@ -128,7 +171,7 @@ describe('test/card - A single playing card', function() {
   });
 
   // ----------------------------------------------------------------
-  it("1.3.1. fromDE - Validation", function() {
+  it("3.3.1. fromDE - Validation", function() {
     // Validation
     expect(Card.fromDE("2", "Treff")).to.eql(new Card(0,0));
     expect(Card.fromDE("4", "Treff")).to.eql(new Card(2,0));
@@ -140,9 +183,8 @@ describe('test/card - A single playing card', function() {
     expect(Card.fromDE("A", "Pik")).to.eql(new Card(12,3));
   });
 
-  // ================================================================
-  // 1.4. - fromDES
-    it("1.4.0. fromDES - Error", function() {
+  // ----------------------------------------------------------------
+  it("3.5.0. fromDES - Error", function() {
     // Invalid input
     expect((ranksuit) => Card.fromDES(ranksuit)).withArgs("Spades").to.throwException();
     expect((ranksuit) => Card.fromDES(ranksuit)).withArgs("6kpades").to.throwException();
@@ -155,7 +197,7 @@ describe('test/card - A single playing card', function() {
   });
 
   // ----------------------------------------------------------------
-  it("1.4.1. fromDES - Validation", function() {
+  it("3.5.1. fromDES - Validation", function() {
     // Validation
     expect(Card.fromDES("t2")).to.eql(new Card(0,0));
     expect(Card.fromDES("t4")).to.eql(new Card(2,0));
@@ -168,50 +210,18 @@ describe('test/card - A single playing card', function() {
   });
   
   // ================================================================
-  // 2 - Intern / String Formatting
+  // 4 - Checker
   // ================================================================
-  // 2.0. toString
-  it("2.1. toString - Validation", function() {
-    expect(Card.fromENS("6s").toString()).to.eql("6 of Spades");
-    expect(Card.fromENS("Td").toString()).to.eql("T of Diamonds");
-    expect(Card.fromENS("Ac").toString()).to.eql("A of Clubs");
-  });
-
-  // 2.1. Rank -> String
-  it("2.1. _rankToString - Validation", function() {
-    expect(Card._rankToString(12)).to.eql("A");
-    expect(Card._rankToString(8)).to.eql("T");
-    expect(Card._rankToString(0)).to.eql("2");
-  });  
-
-  // 2.2. Suit -> String
-  it("2.2. _suitToString - Validation", function() {
-    expect(Card._suitToString(0)).to.eql("Clubs");
-    expect(Card._suitToString(1)).to.eql("Diamonds");
-    expect(Card._suitToString(2)).to.eql("Hearts");
-    expect(Card._suitToString(3)).to.eql("Spades");
-  });  
-
-  // 2.3. Rank -> Integer
-  it("2.3. _rankToInteger - Validation", function() {
-    expect(Card._rankToInteger("A")).to.eql(12);
-    expect(Card._rankToInteger("Q")).to.eql(10);
-    expect(Card._rankToInteger("2")).to.eql(0);
-  });
-
-  // 2.4. Suit -> Integer
-  it("2.4. _suitToInteger - Validation", function() {
-    expect(Card._suitToInteger("Clubs")).to.eql(0);
-    expect(Card._suitToInteger("Diamonds")).to.eql(1);
-    expect(Card._suitToInteger("Hearts")).to.eql(2);
-    expect(Card._suitToInteger("Spades")).to.eql(3);
-  });
-
+  // 4.0. equals
+  // ----------------------------------------------------------------
+  // 4.1. isValidRank
+  // ----------------------------------------------------------------
+  // 4.2. isValidSuit
+  
   // ================================================================
-  // 3. Bridge Related
+  // 5. Bridge Related
   // ================================================================
-  // 3.1. Highcard Points (HCP)
-  it("3.1. Highcard Points - Validation", function() {
+  it("5.1. Highcard Points - Validation", function() {
     for (var rank = 0; rank < 13; rank++) {
       for (var suit = 0; suit < 4; suit++) {
         if (rank === 12) {
@@ -229,8 +239,8 @@ describe('test/card - A single playing card', function() {
     }
   });
 
-  // 3.2. Controls
-  it("3.2. Controls - Validation", function() {
+  // ----------------------------------------------------------------
+  it("5.2. Controls - Validation", function() {
     for (var rank = 0; rank < 13; rank++) {
       for (var suit = 0; suit < 4; suit++) {
         if (rank === 12) {

@@ -21,41 +21,118 @@ const LOCALES = {
 };
 
 // ================================================================
-// Card
+// 1. Card
 class Card {
   constructor(rank, suit) {
     if (!Card.isValidRank(rank)) throw Error(`${rank} is not a valid rank`);
     if (!Card.isValidSuit(suit)) throw Error(`${suit} is not a valid suit`);
-
+    // ================================================================
+    // 2. Base Attributes & Representation
+    // ================================================================
+    // 2.1. Rank
     this.rank = rank;
+
+    // ----------------------------------------------------------------
+    // 2.2. Suit
     this.suit = suit;
   }    
 
   // ----------------------------------------------------------------
-  /*
-  Valid Ranks: [0,1,2,3,4,5,6,7,8,9,10,11,12]
-  @param anything
-  @returns {boolean} true if within range, false otherwise
-  */
+  // 2.3. toString
+  toString() {
+    return this.toStringLocale("en");
+  }
+
+  // ----------------------------------------------------------------
+  // 2.4. toStringLocale
+  toStringLocale(locale = "en") {
+    return LOCALES.toString[locale](
+      Card._rankToString(this.rank, locale), 
+      Card._suitToString(this.suit, locale)
+    )
+  }
+
+  // ----------------------------------------------------------------
+  // 2.5. _rankToInteger
+  static _rankToInteger(rank, locale = "en") {
+    return LOCALES.rank[locale].findIndex(label => label === rank);
+  }
+
+  // ----------------------------------------------------------------
+  // 2.6. _rankToString
+  static _rankToString(rank, locale = "en") {
+    return LOCALES.rank[locale][rank];
+  }
+
+  // ----------------------------------------------------------------
+  // 2.7. _suitToInteger
+  static _suitToInteger(suit, locale = "en") {
+    return LOCALES.suit[locale].findIndex(label => label === suit);
+  }
+
+  // ----------------------------------------------------------------
+  // 2.8. _suitToString
+  static _suitToString(suit, locale = "en") {
+    return LOCALES.suit[locale][suit];
+  }
+
+  // ================================================================
+  // 3. Card Generation
+  // ================================================================
+  // 3.1. fromLocale
+  static fromLocale(rank, suit, locale = "en") {
+    return new Card(this._rankToInteger(rank, locale), this._suitToInteger(suit, locale));
+  }
+
+  // ----------------------------------------------------------------
+  // 3.2. fromEN
+  static fromEN(rank, suit) {
+    return this.fromLocale(rank, suit, "en");
+  }
+
+  // ----------------------------------------------------------------
+  // 3.3. fromENS
+  static fromENS(ranksuit) {
+    if (!ranksuit.length === 2) throw "Error: Input must be 2 characters.";
+    return this.fromLocale(ranksuit[0], ranksuit[1], "ens");
+  }
+
+  // ----------------------------------------------------------------
+  // 3.4. fromDE
+  static fromDE(rank, suit) {
+    return this.fromLocale(rank, suit, "de");
+  }
+
+  // ----------------------------------------------------------------
+  // 3.5. fromDES
+  static fromDES(ranksuit) {
+    if (!ranksuit.length === 2) throw "Error: Input must be 2 characters.";
+    return this.fromLocale(ranksuit[1], ranksuit[0], "des");
+  }
+  // ================================================================
+  // 4. Checker
+  // ================================================================
+  // 4.0. equals
+  equals(card) {
+    return this.rank === card.rank && this.suit === card.suit;
+  }
+  
+  // ----------------------------------------------------------------
+  // 4.1. isValidRank
   static isValidRank(rank) {
     return typeof(rank) === 'number' && Number.isInteger(rank) && rank >= 0 && rank <= 12;
   }
 
   // ----------------------------------------------------------------
-  /*
-  Valid Ranks: [0,1,2,3]
-  @param anything
-  @returns {boolean} true if within range, false otherwise
-  */
+  // 4.2. isValidSuit
   static isValidSuit(suit) {
     return typeof(suit) === 'number' && Number.isInteger(suit) && suit >= 0 && suit <= 3;
   }
 
-  // ----------------------------------------------------------------
-  /*
-  Highcard points of a card
-  @param {number} A: 4, K: 3, Q: 2, J: 1, Rest: 0
-  */
+  // ================================================================
+  // 5. Bridge Related
+  // ================================================================
+  // 5.1. Highcard Points (HCP)
   get hcp() {
     switch(this.rank) {
       case(12):
@@ -72,10 +149,7 @@ class Card {
   }
 
   // ----------------------------------------------------------------
-  /*
-  Control points of a card
-  @param {number} A: 2, K: 1, Rest: 0
-  */
+  // 5.2. Control Points
   get controls() {
     switch(this.rank) {
       case(12):
@@ -86,149 +160,10 @@ class Card {
         return 0;
     }
   }
-
-  // ----------------------------------------------------------------
-  /*
-  Equality check for a card with another
-  @param {Card} A playing card
-  @returns {boolean} true if equal, false otherwise
-  */
-  equals(card) {
-     return this.rank === card.rank && this.suit === card.suit;
-  }
-
-  // ----------------------------------------------------------------
-  /*
-  Converts the Number representation of a rank into a locale String.
-  @param {number} rank 
-  @param {string} locale, default = "en"
-  @returns {string} rank of respetive locale
-  */
-  static _rankToString(rank, locale = "en") {
-    return LOCALES.rank[locale][rank];
-  }
-
-  // ----------------------------------------------------------------
-  /*
-  Converts the Number representation of a suit into a locale String.
-  @param {number} suit 
-  @param {string} locale, default = "en"
-  @returns {string} suit of respetive locale
-  */
-  static _suitToString(suit, locale = "en") {
-    return LOCALES.suit[locale][suit];
-  }
-
-  // ----------------------------------------------------------------
-  /*
-  Converts the String representation of a rank into a locale Number.
-  @param {string} rank 
-  @param {string} locale, default = "en"
-  @returns {number} rank of respetive locale
-  */
-  static _rankToInteger(rank, locale = "en") {
-   return LOCALES.rank[locale].findIndex(label => label === rank);
-  }
-
-  // ----------------------------------------------------------------
-   /*
-  Converts the String representation of a suit into a locale Number.
-  @param {string} suit 
-  @param {string} locale, default = "en"
-  @returns {number} suit of respetive locale
-  */
-  static _suitToInteger(suit, locale = "en") {
-    return LOCALES.suit[locale].findIndex(label => label === suit);
-  }
-
-  // ----------------------------------------------------------------
-  /*
-  Generates a Card from a locale String representation.
-  @param {string} rank
-  @param {string} suit
-  @param {string} locale
-  return {Card} the respective Card
-  */
-  static fromLocale(rank, suit, locale = "en") {
-    return new Card(this._rankToInteger(rank, locale), this._suitToInteger(suit, locale));
-  }
-  
-  // ----------------------------------------------------------------
-  /*
-  Calls fromLocale with locale = "de".
-  @param {string} rank
-  @param {string} suit
-  @return {Card} the respective Card
-  */
-  static fromDE(rank, suit) {
-    return this.fromLocale(rank, suit, "de");
-  }
-
-  // ----------------------------------------------------------------
-  /*
-  Calls fromLocale with locale = "en".
-  @param {string} rank
-  @param {string} suit
-  @return {Card} the respective Card
-  */
-  static fromEN(rank, suit) {
-    return this.fromLocale(rank, suit, "en");
-  }
-
-  // ----------------------------------------------------------------
-  /*
-  Calls fromLocale with locale = "des".
-  @param {string} ranksuit
-  @return {Card} the respective Card
-  */
-  static fromDES(ranksuit) {
-    if (!ranksuit.length === 2) throw "Error: Input must be 2 characters.";
-    return this.fromLocale(ranksuit[1], ranksuit[0], "des");
-  }
-
-  // ----------------------------------------------------------------
-  /*
-  Calls fromLocale with locale = "ens".
-  @param {string} ranksuit
-  @return {Card} the respective Card
-  */
-  static fromENS(ranksuit) {
-    if (!ranksuit.length === 2) throw "Error: Input must be 2 characters.";
-    return this.fromLocale(ranksuit[0], ranksuit[1], "ens");
-  }
-
-  // ----------------------------------------------------------------
-  /*
-  Calls toStringLocale with locale = "en".
-  @returns {string} String representation of the Card
-  */
-  toString() {
-    return this.toStringLocale("en");
-  }
-
-  // ----------------------------------------------------------------
-  /*
-  Gives a (human readable) String representation of the Card.
-  @param {string} locale
-  @returns {string} String representation of the Card
-  */
-  toStringLocale(locale = "en") {
-    return LOCALES.toString[locale](
-      Card._rankToString(this.rank, locale), 
-      Card._suitToString(this.suit, locale)
-    )
-  }
 }
 
 // ================================================================
 // Console.log
-/*
-console.log(Card.fromDE("6","Treff").toStringLocale("de"));
-console.log(Card.fromDE("6","Treff").toStringLocale("en"));
-console.log(Card.fromENS("6c").toStringLocale("ens"));
-console.log(Card.fromENS("6c").toStringLocale("en"));
-let card2 = new Card("7", "Spades");
-*/
 
 // ================================================================
 module.exports = Card
