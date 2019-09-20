@@ -48,7 +48,7 @@ Card.toString()
 
 // Examples
 const club7 = new Card(5,0)
-club7.toString == "7 of Clubs"
+club7.toString() == "7 of Clubs"
 ```
 
 #### 2.4. toStringLocale
@@ -275,7 +275,8 @@ Card.isValidSuit("Hearts") == false
 ```javascript
 /*
 Highcard points of a card
-@param {number} A: 4, K: 3, Q: 2, J: 1, Rest: 0
+A / K / Q / J / Rest
+@returns {number} 4 / 3 / 2 / 1 / 0
 */
 Card.hcp
 ```
@@ -284,7 +285,8 @@ Card.hcp
 ```javascript
 /*
 Control points of a card
-@param {number} A: 2, K: 1, Rest: 0
+A / K / Rest
+@returns {number} 2 / 1 / 0
 */
 Card.controls
 ```

@@ -9,6 +9,12 @@ A set of playing cards can be used to represent either a hand or a deck of cards
 
 #### 2.0 Shuffle
 Shuffeling the cards within a set is implemented with the Knuth-Morris Algorithm.
+```javascript
+/*
+Shuffles the CardSet
+*/
+CardSet.shuffle()
+```
 
 #### 2.1. Add Card
 ```javascript
