@@ -25,7 +25,7 @@ describe('test/impsToVictoryPoints - IMPs to Victory Points', function() {
     expect(impsToVictoryPoints).withArgs(20, "/").to.throwException();
   });
 
-  it("0.3. Error - boardCnt invalid 2", function() {
+  it("0.3. Error - boardCnt invalid range", function() {
     expect(impsToVictoryPoints).withArgs(20, 1).to.throwException();
     expect(impsToVictoryPoints).withArgs(20, 5).to.throwException();
     expect(impsToVictoryPoints).withArgs(20, 11).to.throwException();

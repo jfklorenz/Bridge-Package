@@ -16,7 +16,7 @@ describe('test/scoreToImps - Score difference to IMPs', function() {
     expect(scoreToImps).withArgs('/').to.throwException();
   });
 
-  it("0.2. Error - score difference invalid 2", function() {
+  it("0.2. Error - score difference invalid range", function() {
     expect(scoreToImps).withArgs(11).to.throwException();
     expect(scoreToImps).withArgs(-15).to.throwException();
     expect(scoreToImps).withArgs(-99).to.throwException();
