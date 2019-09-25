@@ -62,9 +62,9 @@ class CardSet {
   // ----------------------------------------------------------------
   // 2.4. Remove Cards
   removeCards(cards) {
-    for (var card in cards) {
-      this.removeCard(card)
-    }
+    for (var c = 0; c < cards.length; c++) {
+      this.removeCard(cards[c])
+  }
   }
 
   // ================================================================

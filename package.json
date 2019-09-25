@@ -1,7 +1,7 @@
 {
   "name": "contract-bridge",
   "version": "3.1.2",
-  "description": "Things for contract bridge",
+  "description": "Contract Bridge scoring, movements, dealer and statistics.",
   "main": "index.js",
   "repository": "https://github.com/jfklorenz/Bridge-Package.git",
   "author": "Julian Lorenz",
@@ -26,5 +26,9 @@
   },
   "scripts": {
     "test": "jest"
+  },
+  "dependencies": {
+    "lstream": "^0.0.4",
+    "multipipe": "^3.0.1"
   }
 }
