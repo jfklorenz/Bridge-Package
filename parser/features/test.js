@@ -1,128 +1,180 @@
 // ================================
 // Imports
-var stream = require('stream');
+const stream = require("stream");
+const fs = require("fs");
+const path = require("path");
 
 // ================================
 // Constants
 let tagLine = /^\[\s*([a-zA-Z0-9_]+)\s*"(.*)"\s*\]$/;
 let emptyLine = /^\s*$/;
-let crlf = '\r\n';
+let crlf = "\r\n";
 
 // ================================
-// 
-function* parsePbn(file) {
+//
+class LineStream extends stream.Transform {
+  constructor(options) {
+    super(options);
+    this._tmpline = "";
+  }
 
+  _transform(chunk, encoding, done) {
+    let actualChunk = this._tmpline + chunk;
+    let lines = actualChunk.split(/\r\n|\r|\n/);
+    if (lines.length === 1) {
+      this._tmpline = actualChunk;
+      return done();
+    }
+    this._tmpline = lines.pop();
 
-    
+    lines.map(l => (l.length === 0 ? "\n" : l)).forEach(l => this.push(l));
+    done();
+  }
 
-
+  _flush(done) {
+    if (this._tmpline.length > 0) {
+      this.push(this._tmpline);
+    }
+    done();
+  }
 }
 
-
-
 class PbnStream extends stream.Transform {
-    constructor(opts) {
-        super(opts);
-        this.opts = opts || {};
-        this.opts.objectMode = true;
-        this.tagValues = {};
-    }
+  constructor(options) {
+    super({ objectMode: true, ...options });
+    this.state = "Start";
+    this._tmpTag = null;
+  }
 
-    _transform(line, _, done) {
-        if (this.comment) {
-            if (line[0] === '}') {
-                this.produce(this.comment);
-                this.comment = undefined;
-            }
-            else {
-                this.comment.text += line + crlf;
-            }
+  _transform(line, encoding, done) {
+    let tag;
+    switch (this.state) {
+      case "Start":
+        const version = line.match(/^%\s+PBN\s+(\d)\.(\d)/);
+        if (version !== null) {
+          this.state = "Format";
+          this.push({
+            type: "Pbn",
+            version: { major: version[1], minor: version[2] }
+          });
+          done();
+        } else {
+          done(new Error("Not a .PBN file"));
         }
-        else if (line[0] === '[') {
-            let tag = line.match(tagLine);
-            if (!tag)
-                return done(new Error('Invalid PBN for tagpair: ' + line));
-            this.produce(null);
-            let name = tag[1],
-                value = tag[2];
-            if (value === '#') {
-                value = this.tagValues[name] || '';
-            } else if (value.startsWith('##')) {
-                value = this.tagValues[name] || value.slice(2);
-            }
-            this.tag = {
-                type: 'tag',
-                name: name,
-                value: value
-            };
-            this.tagValues[this.tag.name] = this.tag.value;
-    
-            if (name === 'Deal')
-                this.tag.cards = parseDeal(value);
-            else if (name === 'Note') {
-                let note = value.match(/(\d+)\:(.*)/);
-                this.tag.number = parseInt(note[1], 10);
-                this.tag.text = note[2];
-            } else if (name === 'Contract') {
-                if (value === 'Pass') {
-                    this.tag.level = 0;
-                    this.tag.risk = '';
-                } else if (value !== '' && value !== '?') {
-                    let contract = value.match(/^(\d)([SHDCN]|NT)(X{0,2})$/);
-                    if (!contract || contract.length < 3)
-                        return done(new Error('Invalid contract: ' + line));
-                    this.tag.level = parseInt(contract[1], 10);
-                    this.tag.denomination = contract[2] === 'N' ? 'NT' : contract[2];
-                    this.tag.risk = contract[3] || '';
-                }
-            }
+        break;
+      case "Format":
+        const format = line.match(/^%\s*(IMPORT|EXPORT)/);
+        if (format !== null) {
+          this.state = "Ingame";
+          this.push({ type: "Format", version: format[1] });
+          done();
+        } else {
+          done(new Error("Not a valid format"));
         }
-        else if (line[0] === ';') {
-            this.produce({
-                type: 'comment',
-                text: line.slice(1).trim()
-            });
+        break;
+      case "Ingame":
+        if ("[{%".includes(line[0]) && this._tmpTag !== null)
+          this.push(this._tmpTag);
+        if (line[0] === "%") return done();
+        tag = line.match(/^\[\s*([a-zA-Z0-9_]+)\s*"(.*)"\s*\]$/);
+        if (tag !== null) {
+          this._tmpTag = {
+            type: "Tag",
+            tag: tag[1],
+            value: tag[2]
+          };
+          return done();
         }
-        else if (line[0] === '%') {
-            this.produce({
-                type: 'directive',
-                text: line.slice(1).trim()
-            });
+        if (line[0] === "{") {
+          this.state = "Comment/Tag";
+          return done();
         }
-        else if (emptyLine.test(line)) {
-            this.produce(null);
-            this.ingame = false;
+        if (this._tmpTag !== null) {
+          this._tmpTag.continuation = [line];
+          this.state = "Continuation";
+          return done();
         }
-        else if (line[0] === '{') {
-            this.comment = {
-                type: 'comment',
-                text: ''
-            };
-            let rest = line.slice(1).trim();
-            if (rest[rest.length - 1] === '}') {
-                this.comment.text = rest.slice(0, -1).trim();
-                this.produce(this.comment);
-                this.comment = undefined;
-            }
+        return done(new Error("Invalid Line:\n" + line));
+      case "Continuation":
+        tag = line.match(/^\[\s*([a-zA-Z0-9_]+)\s*"(.*)"\s*\]$/);
+        if (tag !== null) {
+          this.push(this._tmpTag);
+          this._tmpTag = {
+            type: "Tag",
+            tag: tag[1],
+            value: tag[2]
+          };
+          this.state = "Ingame";
+          return done();
         }
-        else if (this.tag) {
-            this.tag.section = this.tag.section || [];
-            this.tag.tokens = this.tag.tokens || [];
-            this.tag.section.push(line);
-            Array.prototype.push.apply(this.tag.tokens, line.match(/\S+/g));
+        if (line === "\n") {
+          this.state = "NewGame";
+        } else {
+          this._tmpTag.continuation.push(line);
         }
-        else {
-            return done(new Error('Invalid PBN: ' + line));
-        }
-        done();
-    } 
+        return done();
+      case "NewGame":
+        this.push(this._tmpTag);
+        this._tmpTag = null;
+        this.push({ type: "NewGame" });
+        this.state = "Ingame";
+        return done();
+    }
+  }
+
+  _flush() {
+    if (this._tmpTag !== null) {
+      this.push(this._tmpTag);
+      this._tmpTag = null;
+    }
+  }
+}
+
+class GameStream extends stream.Transform {
+  constructor(options) {
+    super({ objectMode: true, ...options });
+    this._tmpGame = {};
+  }
+
+  _transform(tag, encoding, done) {
+    switch (tag.type) {
+      case "Pbn":
+        this._tmpGame.pbn = tag.version;
+        return done();
+      case "Format":
+        this._tmpGame.format = tag.version;
+        this.push(this._tmpGame);
+        this._tmpGame = {};
+        return done();
+      case "NewGame":
+        this.push(this._tmpGame);
+        this._tmpGame = {};
+        return done();
+      case "Tag":
+        this._tmpGame[tag.tag] = tag.value;
+        return done();
+    }
+    return done();
+  }
 }
 
 // ================================
 // Console.log
+const filestream = fs.createReadStream(path.resolve(__dirname, "example.PBN"), {
+  encoding: "ascii"
+});
+
+//filestream.pipe(lineStream).on("data", console.log)
+filestream
+  .pipe(new LineStream({ encoding: "utf8" }))
+  .pipe(new PbnStream())
+  .pipe(new GameStream())
+  .on("data", line => {
+    console.log(line);
+  });
 
 // ================================
 // Exports
 module.exports = {
-    PbnStream
-}
+  LineStream
+};

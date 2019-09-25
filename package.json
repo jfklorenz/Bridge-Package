@@ -27,8 +27,5 @@
   "scripts": {
     "test": "jest"
   },
-  "dependencies": {
-    "lstream": "^0.0.4",
-    "multipipe": "^3.0.1"
-  }
+  "dependencies": {}
 }
