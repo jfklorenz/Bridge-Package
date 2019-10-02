@@ -1,6 +1,6 @@
 {
   "name": "contract-bridge",
-  "version": "3.1.2",
+  "version": "3.2.0",
   "description": "Contract Bridge scoring, movements, dealer and statistics.",
   "main": "index.js",
   "repository": "https://github.com/jfklorenz/Bridge-Package.git",
