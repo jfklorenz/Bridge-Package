@@ -1,7 +1,6 @@
 % PBN 1.0
 % EXPORT
 %
-%{hurr durr}
 [Event "Event 1"]
 [Site "Site 1"]
 [Date "Date 1"]
@@ -54,6 +53,20 @@ HJ - - S7
 [Declarer "Declarer 2"]
 [Contract "Contract 2"]
 [Result "Result 2"]
+{
+                S
+                H 6 3
+                D A K Q 9 8 7
+                C A 9 7 3 2
+S K Q 10 2                      S A 8 6 5 4
+H A 10                          H K Q 5
+D J 6 5 4 2                     D 10
+C 8 5                           C Q J 10 6
+                S J 9 7 3
+                H J 9 8 7 4 2
+                D 3
+                C K 4   
+}
 [HomeTeam "HomeTeam 2"]
 [Room "Room 2"]
 [Round "Round 2"]
@@ -77,3 +90,25 @@ HT C3 C5 SQ
 C6 C8 C7 S9
 HJ - - S7
 *
+
+[Event "Event 1"]
+[Site "Site 1"]
+[Date "Date 1"]
+[Board "Board 1"]
+[West "West 1"]
+[North "North 1"]
+[East "East 1"]
+[South "South 1"]
+[Dealer "Dealer 1"]
+[Vulnerable "Vulnerable 1"]
+[Deal "Deal 1"]
+[Declarer "Declarer 1"]
+[Contract "Contract 1"]
+[Result "Result 1"]
+[HomeTeam "HomeTeam 1"]
+[Room "Room 1"]
+[Round "Round 1"]
+[Score "Score 1"]
+[Table "Table 1"]
+[VisitTeam "VisitTeam 1"]
+[Auction "Auction 1"]

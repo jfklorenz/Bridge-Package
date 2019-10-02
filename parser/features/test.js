@@ -11,13 +11,13 @@ let emptyLine = /^\s*$/;
 let crlf = "\r\n";
 
 // ================================
-//
 class LineStream extends stream.Transform {
   constructor(options) {
     super(options);
     this._tmpline = "";
   }
 
+  // ================================
   _transform(chunk, encoding, done) {
     let actualChunk = this._tmpline + chunk;
     let lines = actualChunk.split(/\r\n|\r|\n/);
@@ -31,6 +31,7 @@ class LineStream extends stream.Transform {
     done();
   }
 
+  // ================================
   _flush(done) {
     if (this._tmpline.length > 0) {
       this.push(this._tmpline);
@@ -39,6 +40,8 @@ class LineStream extends stream.Transform {
   }
 }
 
+// ================================
+// 2. PBN Stream
 class PbnStream extends stream.Transform {
   constructor(options) {
     super({ objectMode: true, ...options });
@@ -46,9 +49,11 @@ class PbnStream extends stream.Transform {
     this._tmpTag = null;
   }
 
+  // ================================
   _transform(line, encoding, done) {
     let tag;
     switch (this.state) {
+      // --------------------------------
       case "Start":
         const version = line.match(/^%\s+PBN\s+(\d)\.(\d)/);
         if (version !== null) {
@@ -62,6 +67,7 @@ class PbnStream extends stream.Transform {
           done(new Error("Not a .PBN file"));
         }
         break;
+      // --------------------------------
       case "Format":
         const format = line.match(/^%\s*(IMPORT|EXPORT)/);
         if (format !== null) {
@@ -72,6 +78,7 @@ class PbnStream extends stream.Transform {
           done(new Error("Not a valid format"));
         }
         break;
+      // --------------------------------
       case "Ingame":
         if ("[{%".includes(line[0]) && this._tmpTag !== null)
           this.push(this._tmpTag);
@@ -86,7 +93,8 @@ class PbnStream extends stream.Transform {
           return done();
         }
         if (line[0] === "{") {
-          this.state = "Comment/Tag";
+          this.state = "Comment";
+          this._tmpTag.comment = [];
           return done();
         }
         if (this._tmpTag !== null) {
@@ -95,6 +103,7 @@ class PbnStream extends stream.Transform {
           return done();
         }
         return done(new Error("Invalid Line:\n" + line));
+      // --------------------------------
       case "Continuation":
         tag = line.match(/^\[\s*([a-zA-Z0-9_]+)\s*"(.*)"\s*\]$/);
         if (tag !== null) {
@@ -113,48 +122,94 @@ class PbnStream extends stream.Transform {
           this._tmpTag.continuation.push(line);
         }
         return done();
+      // --------------------------------
+      case "Comment":
+        if (line[0] === "}") {
+          this.state = "Ingame";
+          return done();
+        }
+        this._tmpTag.comment.push(line);
+        return done();
+      // --------------------------------
       case "NewGame":
         this.push(this._tmpTag);
-        this._tmpTag = null;
         this.push({ type: "NewGame" });
         this.state = "Ingame";
         return done();
     }
   }
 
-  _flush() {
+  // ================================
+  _flush(done) {
     if (this._tmpTag !== null) {
       this.push(this._tmpTag);
+      this.push({ type: "NewGame" });
       this._tmpTag = null;
     }
+    done();
   }
 }
 
+// ================================
+// 3. Game Stream
 class GameStream extends stream.Transform {
   constructor(options) {
     super({ objectMode: true, ...options });
+    this.state = "Ingame";
     this._tmpGame = {};
   }
 
+  // ================================
   _transform(tag, encoding, done) {
-    switch (tag.type) {
-      case "Pbn":
-        this._tmpGame.pbn = tag.version;
+    if (tag.type === "Pbn") {
+      this.state = "Info";
+    }
+    switch (this.state) {
+      // --------------------------------
+      case "Info":
+        this._tmpGame[tag.type] = tag.version;
+        if (tag.type === "Format") {
+          this.state = "Ingame";
+          this.push(this._tmpGame);
+          this._tmpGame = {};
+        }
         return done();
-      case "Format":
-        this._tmpGame.format = tag.version;
-        this.push(this._tmpGame);
-        this._tmpGame = {};
+      // --------------------------------
+      case "Ingame":
+        if (tag.type === "NewGame") {
+          this.state = "NewGame";
+          return done();
+        }
+        this._tmpGame[tag.tag] = tag.value;
+        if (tag.continuation !== undefined) {
+          if (this._tmpGame.Continuations === undefined) {
+            this._tmpGame.Continuations = {};
+          }
+          this._tmpGame["Continuations"][tag.tag] = tag.continuation;
+        }
+        if (tag.comment !== undefined) {
+          if (this._tmpGame.Comments === undefined) {
+            this._tmpGame.Comments = {};
+          }
+          this._tmpGame["Comments"][tag.tag] = tag.comment;
+        }
         return done();
+      // --------------------------------
       case "NewGame":
         this.push(this._tmpGame);
+        this.state = "Ingame";
         this._tmpGame = {};
         return done();
-      case "Tag":
-        this._tmpGame[tag.tag] = tag.value;
-        return done();
     }
-    return done();
+  }
+
+  // ================================
+  _flush(done) {
+    if (this._tmpGame !== null) {
+      this.push(this._tmpGame);
+      this._tmpGame = null;
+    }
+    done();
   }
 }
 
