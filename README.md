@@ -6,10 +6,7 @@
 
 This is a **Javascript** package for the card game **Contract Bridge**.
 
-
-
 ---
-
 
 ## [Dealer](https://github.com/jfklorenz/Package-Bridge/blob/master/dealer/README.md "Link / Dealer")
 
@@ -22,8 +19,6 @@ Deal and play a game of bridge.
 - [ ] Single Table
 - [ ] Single Player
 - [ ] Evaluate a Trick
-
-
 
 ---
 

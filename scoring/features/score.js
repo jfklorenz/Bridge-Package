@@ -74,7 +74,7 @@ function score(level, suit, double, declarer, vulnerability, result) {
       points -= undertricks[vulnerability][double][j];
     }
   }
-  return declarer < 2 ? points : -points;
+  return declarer % 2 === 0 ? points : -points;
 }
 
 // ================================================================
