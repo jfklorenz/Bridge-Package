@@ -1,5 +1,7 @@
 # Contract-Bridge Package
-![Status](https://img.shields.io/badge/status-in%20progress-yellow) [![NPM](https://nodei.co/npm/contract-bridge.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/contract-bridge/) ![GitHub top language](https://img.shields.io/github/languages/top/jfklorenz/package-bridge) ![npm](https://img.shields.io/npm/v/contract-bridge) ![npm](https://img.shields.io/npm/dm/contract-bridge) ![NPM](https://img.shields.io/npm/l/contract-bridge)
+[![NPM](https://nodei.co/npm/contract-bridge.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/contract-bridge/) 
+
+![Status](https://img.shields.io/badge/status-in%20progress-yellow) ![GitHub top language](https://img.shields.io/github/languages/top/jfklorenz/package-bridge) ![npm](https://img.shields.io/npm/v/contract-bridge) ![npm](https://img.shields.io/npm/dm/contract-bridge) ![NPM](https://img.shields.io/npm/l/contract-bridge)
 
 This is a **Javascript** package for the card game **Contract Bridge**.
 
