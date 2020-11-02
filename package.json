@@ -27,5 +27,6 @@
   "scripts": {
     "test": "jest"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" }
 }
